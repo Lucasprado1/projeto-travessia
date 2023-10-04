@@ -26,6 +26,7 @@ export class ReportGeneratorComponent {
       response => {
         // Trate a resposta do backend, se necessário
         console.log('Resposta do servidor:', response);
+        this.reportGenerated = true;
         // Limpe ou atualize a interface do usuário, se necessário
       },
       error => {
@@ -33,7 +34,6 @@ export class ReportGeneratorComponent {
         // Lide com erros, se necessário
       }
     );
-    this.reportGenerated = true;
   }
 
   onFileSelected(event: any) {

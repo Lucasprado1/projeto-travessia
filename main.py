@@ -39,7 +39,7 @@ def post_arquivo():
         print(uploaded_file)
         nome_do_arquivo = uploaded_file.filename
         uploaded_file.save(os.path.join(DIRETORIO, nome_do_arquivo))
-        #recebimentos_origem_destino()
+        recebimentos_origem_destino()
         return '', 201
     else:
         return 'Nenhum arquivo selecionado.'
