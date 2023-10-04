@@ -1,0 +1,65 @@
+.report-generator {
+    background-color: #e6f7ff;
+    padding: 20px;
+    border-radius: 10px;
+  
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  
+    .options {
+      margin-bottom: 20px;
+  
+      label {
+        font-weight: bold;
+      }
+  
+    }
+  
+    .file-upload {
+      margin-bottom: 20px;
+    }
+  
+    .generate-button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+    /* styles.css ou styles.scss */
+/* styles.css ou styles.scss */
+
+  
+  
+    .download-button {
+      margin-top: 20px;
+    }
+  }
+  .my-custom-select {
+    width: 150px; /* Defina a largura desejada */
+    height: 30px; /* Defina a altura desejada */
+    margin: 0; /* Remova margens para alinhar com outros elementos */
+    border: 1px solid #ccc; /* Adicione uma borda para destacar o elemento */
+  }
+
+  .link {
+    color: blue; /* Define a cor do link como azul */
+    text-decoration: underline; /* Adiciona uma sublinhado para indicar um link */
+    cursor: pointer; /* Muda o cursor para uma mão quando o mouse passa sobre o link */
+  }
+  
+  .content-container{
+    text-align: left;
+    justify-content:left;
+  }
+
+  .title{
+    text-align:center;
+  }

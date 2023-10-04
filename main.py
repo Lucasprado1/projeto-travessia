@@ -2,12 +2,13 @@ from flask import Flask, request, jsonify, send_from_directory, render_template
 from openpyxl import Workbook, load_workbook
 import os
 from openpyxl.formula.translate import Translator #copy formula
+from flask_cors import CORS
 
 
-DIRETORIO = "/workspaces/projeto-travessia/sources"
+DIRETORIO = "./sources"
 
 api = Flask(__name__)
-
+CORS(api)
 
 @api.route("/")
 def tela_home():
@@ -33,13 +34,16 @@ def get_arquivo(nome_do_arquivo):
 
 @api.route("/arquivos", methods=["POST"])
 def post_arquivo():
-    arquivo = request.files.get("meuArquivo")
-
-    print(arquivo)
-    nome_do_arquivo = arquivo.filename
-    arquivo.save(os.path.join(DIRETORIO, nome_do_arquivo))
-    recebimentos_origem_destino()
-    return '', 201
+    uploaded_file = request.files['file']
+    if uploaded_file.filename != '':
+        print(uploaded_file)
+        nome_do_arquivo = uploaded_file.filename
+        uploaded_file.save(os.path.join(DIRETORIO, nome_do_arquivo))
+        #recebimentos_origem_destino()
+        return '', 201
+    else:
+        return 'Nenhum arquivo selecionado.'
+    
 
 
 # =================================== inicio ==============================
