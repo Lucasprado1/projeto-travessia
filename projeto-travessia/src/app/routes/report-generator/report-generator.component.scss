@@ -1,65 +1,491 @@
-.report-generator {
-    background-color: #e6f7ff;
-    padding: 20px;
-    border-radius: 10px;
-  
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-  
-    .options {
-      margin-bottom: 20px;
-  
-      label {
-        font-weight: bold;
-      }
-  
-    }
-  
-    .file-upload {
-      margin-bottom: 20px;
-    }
-  
-    .generate-button {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-  
-      &:hover {
-        background-color: #0056b3;
-      }
-    }
-    /* styles.css ou styles.scss */
-/* styles.css ou styles.scss */
+.div {
+  background-color: rgba(23, 51, 60, 0.9);
+  display: flex;
+  flex-direction: column;
+}
+.div-2 {
+  background-color: #2d717a;
+  align-self: stretch;
+  display: flex;
+  width: 100%;
+  padding-top: 22px;
+  padding-bottom: 22px;
+  flex-direction: column;
+}
+@media (max-width: 991px) {
+  .div-2 {
+    max-width: 100%;
+  }
+}
+.div-3 {
+  align-self: center;
+  display: flex;
+  margin-top: 1px;
+  margin-left: -17px;
+  margin-bottom: -2px;
+  width: 100%;
+  max-width: 1335px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+@media (max-width: 991px) {
+  .div-3 {
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+.img {
+  aspect-ratio: 4.57;
+  object-fit: cover;
+  object-position: left;
+  width: 201px;
+  align-self: start;
+}
 
-  
-  
-    .download-button {
-      margin-top: 20px;
-    }
+.div-4 {
+  align-self: center;
+  display: flex;
+  margin-top: auto;
+  margin-bottom: auto;
+  align-items: flex-start;
+  gap: 12px;
+}
+@media (max-width: 991px) {
+  .div-4 {
+    justify-content: center;
   }
-  .my-custom-select {
-    width: 150px; /* Defina a largura desejada */
-    height: 30px; /* Defina a altura desejada */
-    margin: 0; /* Remova margens para alinhar com outros elementos */
-    border: 1px solid #ccc; /* Adicione uma borda para destacar o elemento */
+}
+.img-2 {
+  aspect-ratio: 0.96;
+  object-fit: cover;
+  object-position: center;
+  width: 26px;
+  align-self: center;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.div-5 {
+  background-color: #000;
+  align-self: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 1px;
+  height: 32px;
+}
+.img-3 {
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+  width: 37px;
+  margin-top: 1px;
+}
+.div-6 {
+  background-color: #000;
+  align-self: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 1px;
+  height: 32px;
+}
+.img-4 {
+  aspect-ratio: 1.16;
+  object-fit: cover;
+  object-position: center;
+  width: 44px;
+}
+.div-7 {
+  border-radius: 15px;
+  background-color: #bfaff2;
+  align-self: start;
+  display: flex;
+  margin-top: 2px;
+  width: 175px;
+  max-width: 100%;
+  flex-direction: column;
+}
+.div-8 {
+  border-radius: 15px;
+  background-color: #2a9379;
+  align-self: stretch;
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+  padding-top: 16px;
+  padding-right: 20px;
+  padding-bottom: 16px;
+  padding-left: 20px;
+  flex-direction: column;
+  cursor: pointer; /* Altera o cursor do mouse para indicar interatividade */
+  transition: background-color 0.3s; /* Adiciona uma transição suave na mudança de cor de fundo */
+}
+.div-9 {
+  color: #333;
+  text-align: center;
+  font-family: Poppins, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 32px;
+  align-self: center;
+  margin-bottom: -2px;
+  text-wrap: nowrap;
+}
+@media (max-width: 991px) {
+  .div-9 {
+    text-wrap: initial;
   }
-
-  .link {
-    color: blue; /* Define a cor do link como azul */
-    text-decoration: underline; /* Adiciona uma sublinhado para indicar um link */
-    cursor: pointer; /* Muda o cursor para uma mão quando o mouse passa sobre o link */
+}
+.div-10 {
+  background-color: rgba(23, 51, 60, 0.9);
+  align-self: stretch;
+  display: flex;
+  flex-grow: 1;
+  padding-top: 40px;
+  padding-right: 20px;
+  padding-bottom: 40px;
+  padding-left: 20px;
+  flex-direction: column;
+}
+@media (max-width: 991px) {
+  .div-10 {
+    max-width: 100%;
   }
-  
-  .content-container{
-    text-align: left;
-    justify-content:left;
+}
+.div-11 {
+  align-self: center;
+  display: flex;
+  margin-top: 21px;
+  width: 485px;
+  max-width: 100%;
+  flex-direction: column;
+}
+.div-12 {
+  justify-content: center;
+  color: var(--White, #fff);
+  font-family: Poppins, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 30px;
+  align-self: center;
+  text-wrap: nowrap;
+}
+@media (max-width: 991px) {
+  .div-12 {
+    text-wrap: initial;
   }
-
-  .title{
-    text-align:center;
+}
+.div-13 {
+  border-radius: 15px;
+  background-color: #dcd1fe;
+  align-self: stretch;
+  display: flex;
+  margin-top: 39px;
+  flex-direction: column;
+}
+@media (max-width: 991px) {
+  .div-13 {
+    max-width: 100%;
   }
+}
+.div-14 {
+  border-radius: 15px;
+  background-color: #2a9379;
+  align-self: stretch;
+  display: flex;
+  flex-grow: 1;
+  padding-top: 4px;
+  padding-right: 20px;
+  padding-bottom: 4px;
+  padding-left: 12px;
+  flex-direction: column;
+  cursor: pointer; /* Altera o cursor do mouse para indicar interatividade */
+  transition: background-color 0.3s; /* Adiciona uma transição suave na mudança de cor de fundo */
+}
+@media (max-width: 991px) {
+  .div-14 {
+    max-width: 100%;
+  }
+}
+.div-15 {
+  align-self: start;
+  display: flex;
+  width: 311px;
+  max-width: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  display: flex;
+  align-items: center; /* Alinha verticalmente ao centro */
+}
+.img-5 {
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: bottom;
+  width: 24px;
+}
+.div-16 {
+  color: #fff;
+  text-align: center;
+  font-family: Poppins, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 32px;
+  align-self: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-wrap: nowrap;
+}
+@media (max-width: 991px) {
+  .div-16 {
+    text-wrap: initial;
+  }
+}
+.div-17 {
+  border-radius: 15px;
+  background-color: #fff;
+  align-self: stretch;
+  display: flex;
+  margin-top: 37px;
+  flex-direction: column;
+  cursor: pointer; /* Altera o cursor do mouse para indicar interatividade */
+  transition: background-color 0.3s; /* Adiciona uma transição suave na mudança de cor de fundo */
+}
+@media (max-width: 991px) {
+  .div-17 {
+    max-width: 100%;
+  }
+}
+.div-18 {
+  border-radius: 15px;
+  background-color: #2a9379;
+  align-self: stretch;
+  display: flex;
+  flex-grow: 1;
+  padding-top: 4px;
+  padding-right: 20px;
+  padding-bottom: 4px;
+  padding-left: 12px;
+  flex-direction: column;
+}
+@media (max-width: 991px) {
+  .div-18 {
+    max-width: 100%;
+  }
+}
+.div-19 {
+  align-self: start;
+  display: flex;
+  width: 320px;
+  max-width: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  display: flex;
+  align-items: center; /* Alinha verticalmente ao centro */
+}
+.img-6 {
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+  width: 24px;
+  align-self: start;
+}
+.div-20 {
+  color: #fff;
+  text-align: center;
+  font-family: Poppins, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 32px;
+  align-self: start;
+  text-wrap: nowrap;
+}
+@media (max-width: 991px) {
+  .div-20 {
+    text-wrap: initial;
+  }
+}
+.div-21 {
+  border-radius: 15px;
+  background-color: #bfaff2;
+  align-self: stretch;
+  display: flex;
+  margin-top: 33px;
+  flex-direction: column;
+  cursor: pointer; /* Altera o cursor do mouse para indicar interatividade */
+  transition: background-color 0.3s; /* Adiciona uma transição suave na mudança de cor de fundo */
+}
+@media (max-width: 991px) {
+  .div-21 {
+    max-width: 100%;
+  }
+}
+.div-22 {
+  border-radius: 15px;
+  background-color: #2a9379;
+  align-self: stretch;
+  display: flex;
+  flex-grow: 1;
+  padding-top: 4px;
+  padding-right: 20px;
+  padding-bottom: 4px;
+  padding-left: 11px;
+  flex-direction: column;
+}
+@media (max-width: 991px) {
+  .div-22 {
+    max-width: 100%;
+  }
+}
+.div-23 {
+  align-self: start;
+  display: flex;
+  width: 326px;
+  max-width: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  display: flex;
+  align-items: center; /* Alinha verticalmente ao centro */
+}
+.img-7 {
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+  width: 24px;
+}
+.div-24 {
+  color: #fff;
+  text-align: center;
+  font-family: Poppins, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 32px;
+  align-self: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-wrap: nowrap;
+}
+@media (max-width: 991px) {
+  .div-24 {
+    text-wrap: initial;
+  }
+}
+.div-25 {
+  border-radius: 15px;
+  background-color: #2d717a;
+  align-self: center;
+  display: flex;
+  margin-top: 33px;
+  width: 361px;
+  max-width: 100%;
+  flex-grow: 1;
+  flex-direction: column;
+  cursor: pointer; /* Altera o cursor do mouse para indicar interatividade */
+  transition: background-color 0.3s; /* Adiciona uma transição suave na mudança de cor de fundo */
+}
+.div-26 {
+  border-radius: 15px;
+  background-color: #2d717a;
+  align-self: stretch;
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+  padding-top: 7px;
+  padding-right: 20px;
+  padding-bottom: 7px;
+  padding-left: 12px;
+  flex-direction: column;
+}
+.div-27 {
+  align-self: start;
+  display: flex;
+  margin-bottom: -1px;
+  width: 239px;
+  max-width: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  display: flex;
+  align-items: center; /* Alinha verticalmente ao centro */
+}
+.img-8 {
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+  width: 24px;
+  align-self: start;
+}
+.div-28 {
+  color: #fff;
+  text-align: center;
+  font-family: Poppins, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 32px;
+  align-self: start;
+  text-wrap: nowrap;
+}
+@media (max-width: 991px) {
+  .div-28 {
+    text-wrap: initial;
+  }
+}
+.div-29 {
+  align-self: center;
+  display: flex;
+  margin-top: 169px;
+  margin-bottom: 144px;
+  width: 329px;
+  max-width: 100%;
+  flex-direction: column;
+}
+.div-30 {
+  border-radius: 15px;
+  align-self: start;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+.div-31 {
+  border-radius: 15px;
+  background-color: #5e987c;
+  align-self: stretch;
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+  padding-top: 15px;
+  padding-right: 20px;
+  padding-bottom: 15px;
+  padding-left: 20px;
+  flex-direction: column;
+  cursor: pointer; /* Altera o cursor do mouse para indicar interatividade */
+  transition: background-color 0.3s; /* Adiciona uma transição suave na mudança de cor de fundo */
+}
+.div-32 {
+  color: #fff3f3;
+  text-align: center;
+  font-family: Poppins, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 32px;
+  align-self: center;
+  margin-top: -1px;
+  margin-bottom: 1px;
+  text-wrap: nowrap;
+}
+@media (max-width: 991px) {
+  .div-32 {
+    text-wrap: initial;
+  }
+}
+.img-9 {
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+  width: 24px;
+  align-self: start;
+  margin-top: 103px;
+  margin-left: 9px;
+}

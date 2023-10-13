@@ -59,4 +59,12 @@ export class ReportGeneratorComponent {
       window.URL.revokeObjectURL(url);
     });
   }
+
+  triggerFileInput() {
+    // Aciona o input de arquivo quando a segunda div é clicada
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
 }
