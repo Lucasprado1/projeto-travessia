@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "projeto-travessia": {
+    "projeto-travessia-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/projeto-travessia",
+            "outputPath": "dist/projeto-travessia-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -30,9 +30,7 @@
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/pink-bluegrey.css",
-              "src/styles.scss",
-              "node_modules/font-awesome/css/font-awesome.css"
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -67,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "projeto-travessia:build:production"
+              "browserTarget": "projeto-travessia-frontend:build:production"
             },
             "development": {
-              "browserTarget": "projeto-travessia:build:development"
+              "browserTarget": "projeto-travessia-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -78,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "projeto-travessia:build"
+            "browserTarget": "projeto-travessia-frontend:build"
           }
         },
         "test": {
@@ -95,7 +93,6 @@
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -105,6 +102,6 @@
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": "4f88062f-2dbc-4653-8448-02aadd1e80c6"
   }
 }

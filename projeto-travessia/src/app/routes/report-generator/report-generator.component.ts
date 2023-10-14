@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ReportGeneratorService } from './report-generator.service';
 
+
 @Component({
   selector: 'app-report-generator', // Verifique se o seletor corresponde ao elemento desejado no arquivo HTML
   templateUrl: './report-generator.component.html',
@@ -15,6 +16,7 @@ export class ReportGeneratorComponent {
   
 
   generateReport(): void {
+    console.log("teste");
     if (!this.uploadedFile) {
       // Certifique-se de que um arquivo foi carregado antes de enviar
       alert('Por favor, selecione um arquivo Excel antes de enviar.');
