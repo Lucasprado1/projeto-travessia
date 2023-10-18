@@ -14,6 +14,9 @@ import {MatIconModule} from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
 import { GenerateReportsComponent } from './modules/generate-reports/generate-reports.component';
 import { HeaderComponent } from './modules/components/header/header.component';
+import { HttpClientModule } from '@angular/common/http';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+
 
 @NgModule({
   declarations: [
@@ -33,9 +36,14 @@ import { HeaderComponent } from './modules/components/header/header.component';
     MatToolbarModule,
     MatSelectModule,
     FormsModule,
-    MatIconModule
+    MatIconModule,
+    HttpClientModule
   ],
-  providers: [GenerateReportsComponent],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    GenerateReportsComponent
+    
+  ],
   bootstrap: [GenerateReportsComponent]
 })
 export class AppModule { }
