@@ -1,0 +1,35 @@
+.container {
+    height: 200%;
+    margin: 0;
+    padding: 0; 
+    background-color: #222831;
+}
+.body {
+    // background-color: #ac1d88;
+    // background-color: #222831;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center !important;
+    height: 100vh;
+}
+.body div p{
+    font-weight:700;
+    font-size: 3vh;
+    color: #eeeeeebe;
+    float:left;
+}
+.body div{
+    display: flex;
+    align-items: center;
+    align-items: left;
+    margin: 1vh;
+}
+.file-input {
+    display: none;
+}
+.attach-file-class{
+    background-color: #424242f3;
+    border-radius: 5px;
+}
+

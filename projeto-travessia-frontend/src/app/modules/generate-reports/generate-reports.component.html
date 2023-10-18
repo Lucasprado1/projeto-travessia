@@ -1,0 +1,83 @@
+<div class="container">
+    <app-header>
+    </app-header>
+    <div class="body">
+        <div>
+            <p>Gerador de Relatório</p>
+        </div>
+        <div>
+            <mat-form-field style="width: 296px">
+                <mat-label>Selecione a operação</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let food of foods" [value]="food.value">
+                        {{food.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field style="width: 296px">
+                <mat-label>Data de Fechamento</mat-label>
+                <input matInput [matDatepicker]="picker">
+
+                <mat-hint style="opacity: 0.20; color: #EEEEEE">MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="attach-file-class">
+            <input type="file" class="file-input" (change)="onFileSelected($event)" id="fileInput">
+            <div class="file-upload" (click)="triggerFileInput()">
+                <b style="width: 219px; margin-right: 2vh; color: #FFFFFF99; font-weight:410;"> {{fileName? "Base selecionada!": "Selecione a base" }} </b>
+
+                <!-- não apagar!!!!!!!! <button mat-fab extended color="primary" class="upload-btn">
+                    <mat-icon>attach_file</mat-icon>
+                </button> não apagar!!!!!!!!!! -->
+                <button mat-mini-fab color="primary" class="upload-btn">
+                    <mat-icon>attach_file</mat-icon>
+                </button>
+                
+            </div>
+        </div>
+        <p style="opacity: 0.20; color: #EEEEEE; margin-top: -0.5vh">{{ fileName || "Nenhum arquivo foi selecionado..."}}</p>
+
+        <div style="margin-top: 5vh;"class="attach-file-class">
+            <input type="file" class="file-input" (change)="onFileSelected($event)" id="fileInput">
+            <div class="file-upload" (click)="triggerFileInput()">
+                <b style="width: 219px; margin-right: 2vh; color: #FFFFFF99; font-weight:410;"> {{fileName? fileName : "Aguardando arquivo" }} </b>
+
+                <button mat-mini-fab color="primary" class="download-btn">
+                    <mat-icon>download_file</mat-icon>
+                </button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div>
+    <button style="background-color: aqua;" mat-button> Botao </button>
+    <button mat-raised-button class="custom-accent-button"> Botao </button>
+    <button mat-flat-button> Botao </button>
+    <button mat-stroked-button> Botao </button>
+
+</div>
+
+<div>
+    <mat-spinner></mat-spinner>
+</div> -->
+
+
+<!-- <input type="file" class="file-input"
+       (change)="onFileSelected($event)" #fileUpload>
+
+<div class="file-upload">
+
+   {{fileName || "No file uploaded yet."}}
+
+    <button mat-mini-fab color="primary" class="upload-btn"
+      (click)="fileUpload.click()">
+        <mat-icon>attach_file</mat-icon>
+    </button>
+</div> -->

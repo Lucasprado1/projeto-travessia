@@ -1,0 +1,55 @@
+.header {
+    z-index: 1;
+    top: 0;
+    padding: 5vh;
+    display: flex;
+    position: fixed;
+    align-items: center;
+    background-color: #222831;
+    justify-content: space-between;
+}
+.header.transicao1{
+    background-color: #282E37;
+}
+.header.transicao2{
+    background-color: #31363F;
+}
+.header.ativo{
+    background-color: #393E46;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+
+}
+
+.header i{
+    color: #EEEEEE;
+    cursor: pointer;
+    font-size: 3vh;
+    font-weight: 900;
+}
+
+.header .logo {
+    display: flex;
+    position: fixed;
+    margin-top: -4.5vh;
+    margin-left: 14vh;
+    max-height: 38px;
+}
+
+.header .title-group a{ 
+    font-size: 3vh;
+    font-weight: 900;
+    font-family: 'Inter';
+}
+
+.header .icon-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header .icon-group i{
+    color: #EEEEEE;
+    cursor: pointer;
+    font-size: 3vh;
+    font-weight: 900;
+}
