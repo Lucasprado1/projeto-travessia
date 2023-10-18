@@ -23,13 +23,18 @@
     display: flex;
     align-items: center;
     align-items: left;
-    margin: 1vh;
+    margin: 2vh;
 }
 .file-input {
     display: none;
 }
 .attach-file-class{
-    background-color: #424242f3;
-    border-radius: 5px;
+    box-shadow: -5px 0 5px -5px rgba(0, 0, 0, 0.5), 5px 0 5px -5px rgba(0, 0, 0, 0.5);
+    max-height: 6.6vh;
+    background-color: #4A4A4A;
+    margin: 0;
+    padding: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
