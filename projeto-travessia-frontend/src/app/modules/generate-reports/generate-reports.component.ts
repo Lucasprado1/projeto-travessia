@@ -50,7 +50,7 @@ export class GenerateReportsComponent {
 
   generateReport(): void {
     console.log(this.selectedOperation);
-    console.log(this.selectedDate);
+    console.log(this.selectedDate); 
     this.isGenerating = true;
     if (!this.uploadedFile) {
       // Certifique-se de que um arquivo foi carregado antes de enviar

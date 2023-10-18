@@ -6,7 +6,7 @@
             <p>Gerador de Relatório</p>
         </div>
         <div>
-            <mat-form-field style="width: 296px">
+            <mat-form-field style="width: 100%">
                 <mat-label>Selecione a operação</mat-label>
                 <mat-select [(ngModel)]="selectedOperation">
                     <mat-option *ngFor="let operation of operations" [value]="operation.value">
@@ -16,7 +16,7 @@
             </mat-form-field>
         </div>
         <div>
-            <mat-form-field style="width: 296px">
+            <mat-form-field style="width: 100vh">
                 <mat-label>Data de Fechamento</mat-label>
                 <input matInput [matDatepicker]="picker"  [(ngModel)]="selectedDate">
 
@@ -56,7 +56,7 @@
                 (click)="downloadReport()" [ngClass]="{'link': reportGenerated}"
                 class="download-btn">
                     <mat-spinner *ngIf="isGenerating" color="accent" style="width: 3vh; height: 3vh;"></mat-spinner>
-                    <mat-icon *ngIf="!isGenerating">download_file</mat-icon>
+                    <mat-icon style="text-align: justify ;float: left !important" *ngIf="!isGenerating">download_file</mat-icon>
                 </button>
                 
             </div>
