@@ -6,14 +6,19 @@ import {MatDatepickerModule} from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatToolbarModule} from '@angular/material/toolbar'
+import {MatSelectModule} from '@angular/material/select';
+import {FormsModule} from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
 import { GenerateReportsComponent } from './modules/generate-reports/generate-reports.component';
+import { HeaderComponent } from './modules/components/header/header.component';
 
 @NgModule({
   declarations: [
-    GenerateReportsComponent
+    GenerateReportsComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +28,12 @@ import { GenerateReportsComponent } from './modules/generate-reports/generate-re
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatSelectModule,
+    FormsModule,
+    MatIconModule
   ],
   providers: [GenerateReportsComponent],
   bootstrap: [GenerateReportsComponent]
