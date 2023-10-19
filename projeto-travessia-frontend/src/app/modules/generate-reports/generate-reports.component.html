@@ -1,8 +1,9 @@
+<app-header>
+</app-header>
 <div class="container">
-    <app-header>
-    </app-header>
+    
     <div class="body">
-        <div>
+        <div style="margin-left: 20%">
             <p>Gerador de Relatório</p>
         </div>
         <div>
@@ -26,41 +27,54 @@
             </mat-form-field>
         </div>
         <div class="attach-file-class">
-            <input type="file" class="file-input" (change)="onFileSelected($event)" id="fileInput">
-            <div class="file-upload" (click)="triggerFileInput()">
-                <b style="width: 173px; margin-right: 2vh; color: #FFFFFF99; font-weight:410;"> {{fileName? "Base selecionada!": "Selecione a base" }} </b>
+            <b style="position:relative; display: block; margin-right: -24%; color: #FFFFFF99; font-weight: 410; text-align: center; white-space: nowrap"> {{fileName? "Base selecionada!": "Selecione a base" }} </b>
 
-                <button mat-fab extended color="primary" color="accent" [disabled]="false" class="upload-btn">
+            <input  type="file" class="file-input" (change)="onFileSelected($event)" id="fileInput">
+           
+            <div style=" margin-left:95%"class="file-upload" (click)="triggerFileInput()">
+                
+                <button mat-mini-fab style="margin-right: 80%" color="primary" color="accent" [disabled]="false" class="upload-btn">
                     <mat-icon>attach_file</mat-icon>
                 </button>
                 
             </div>
         </div>
-        <p style="opacity: 0.20; color: #EEEEEE; margin-top: -1.8vh; margin-right:2.4vh">{{ fileName || "Nenhum arquivo foi selecionado"}}</p>
+        <p style="opacity: 0.20; color: #EEEEEE; margin-top: -0.5%; margin-left:3%">{{ fileName || "Nenhum arquivo foi selecionado"}}</p>
+        <div class="button">
+            <button [disabled] = "!fileName"
+            (click)="generateReport()"
+            mat-raised-button color="accent" 
+            style="margin-top: 4.5vh; width: 180px; height: 50px; font-size: 14px;">
+            {{fileName? "Gerar": "Aguardando Base..." }}
+            </button>
 
-        <button [disabled] = "!fileName"
-        (click)="generateReport()"
-        mat-raised-button color="accent" 
-        style="margin-top: 4.5vh; width: 180px; height: 50px; font-size: 14px;">
-        {{fileName? "Gerar": "Aguardando Base..." }}
+        </div>
         
-        </button>
 
-        <div style="margin-top: 5vh;"class="attach-file-class">
-            <!-- <input type="file" class="file-input" (change)="onFileSelected($event)" id="fileInput"> -->
-            <div class="file-upload">
-                <b style="width: 173px; margin-right: 2vh; color: #FFFFFF99; font-weight:410;"> {{fileName? "Arquivo selecionado" : "Aguardando arquivo" }} </b>
-
-                <button mat-fab extended color="primary" color="accent" 
+        <div style="margin-top: 5vh;"class="attach-file-class">   
+            <b *ngIf="!fileName && !isGenerating" style="position:relative; display: block;  margin-right: -27.5%; color: #FFFFFF99; font-weight: 410; text-align: center; white-space: nowrap"> 
+                {{"Aguardando arquivo"}} 
+            </b>
+            <b *ngIf="fileName && !isGenerating && !reportGenerated" style="position:relative; display: block; margin-right: -25.5%; color: #FFFFFF99; font-weight: 410; text-align: center; white-space: nowrap"> 
+                {{"Pronto para gerar"}}
+            </b>
+            <b *ngIf="isGenerating && fileName" style="position:relative; display: block; margin-right: -24.5%; color: #FFFFFF99; font-weight: 410; text-align: center; white-space: nowrap"> 
+                {{"Gerando relatório" }} 
+            </b>
+            <b *ngIf="reportGenerated" style="position:relative; display: block; margin-right: -27%; color: #FFFFFF99; font-weight: 410; text-align: center; white-space: nowrap"> 
+                {{"Relatório disponível"}} 
+            </b>
+            <div style=" margin-left:95%"class="file-upload">
+                <button style="margin-right: 80%"mat-mini-fab color="primary" color="accent" 
                 [disabled]="!reportGenerated"
                 (click)="downloadReport()" [ngClass]="{'link': reportGenerated}"
                 class="download-btn">
                     <mat-spinner *ngIf="isGenerating" color="accent" style="width: 3vh; height: 3vh;"></mat-spinner>
                     <mat-icon style="text-align: justify ;float: left !important" *ngIf="!isGenerating">download_file</mat-icon>
                 </button>
-                
             </div>
+            
         </div>
-        <p *ngIf="!fileName" style="opacity: 0.20; color: #EEEEEE; margin-top: -1.8vh; margin-right:2.4vh">Nenhum arquivo foi selecionado</p>
+        <p *ngIf="!fileName" style="opacity: 0.20; color: #EEEEEE; margin-top: -0.5%; margin-left:3%">Nenhum arquivo foi selecionado</p>
     </div>
 </div>
