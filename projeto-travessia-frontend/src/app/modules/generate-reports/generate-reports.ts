@@ -24,4 +24,8 @@ export class GenerateReportsService {
 
     return this.http.post<any>('http://localhost:5000/arquivos', formData);
   }
+
+  sendData(dataToSend: object) {
+    return this.http.post<any>('http://localhost:5000/data', dataToSend);
+  }
 }

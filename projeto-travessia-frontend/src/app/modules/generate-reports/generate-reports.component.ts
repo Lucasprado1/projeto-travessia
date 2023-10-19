@@ -23,16 +23,24 @@ export class GenerateReportsComponent {
   }
 
   operations: Operation[] = [
-    {value: 'raposo', viewValue: 'Raposo'},
-    {value: 'ibira', viewValue: 'Ibirapitanga'},
-    {value: 'atmosfera', viewValue: 'Atmosfera'},
+    {value: 'Raposo', viewValue: 'Raposo'},
+    {value: 'Ibira', viewValue: 'Ibirapitanga/Terra Luz'},
+    {value: 'Atmosfera', viewValue: 'Atmosfera'},
+    {value: 'Barbosa', viewValue: 'Barbosa'},
+    {value: 'Barreiras', viewValue: 'Barreiras'},
+    {value: 'FiveSenses', viewValue: 'Five Senses'},
+    {value: 'GramPoeme', viewValue: 'Gram Poeme'},
+    {value: 'LotesCia', viewValue: 'Lotes & Cia'},
+    {value: 'Ommar', viewValue: 'Ommar'},
+    {value: 'PatioLusitania', viewValue: 'Patio Lusitânia'},
+    {value: 'EntreSerras', viewValue: 'Entre Serras/Residence'},
+    {value: 'Pardini', viewValue: 'Pardini'},
+    {value: 'Dpaula', viewValue: 'D` Paula'},
   ];
   
 
   onFileSelected(event: any) {
-    // Quando um arquivo é selecionado no campo de upload
     this.uploadedFile = event.target.files[0];
-    // this.filename = this.uploadedFile.name
     if(this.uploadedFile){
       console.log(this.uploadedFile.name)
       this.fileName = this.uploadedFile?.name;
@@ -41,54 +49,56 @@ export class GenerateReportsComponent {
 
   triggerFileInput() {
     console.log("clicou")
-    // Aciona o input de arquivo quando a segunda div é clicada
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
     if (fileInput) {
       fileInput.click();
     }
   }
 
-  generateReport(): void {
-    console.log(this.selectedOperation);
-    console.log(this.selectedDate); 
+  sendFile(): void { 
     this.isGenerating = true;
     if (!this.uploadedFile) {
-      // Certifique-se de que um arquivo foi carregado antes de enviar
       alert('Por favor, selecione um arquivo Excel antes de enviar.');
       return;
     }
-
-    // Chame o serviço para fazer o upload do arquivo
     this.reportGeneratorService.uploadFile(this.uploadedFile).subscribe(
       response => {
-        // Trate a resposta do backend, se necessário
         console.log('Resposta do servidor:', response);
         this.reportGenerated = true;
         this.isGenerating = false;
-        // Limpe ou atualize a interface do usuário, se necessário
       },
       error => {
         console.error('Erro ao fazer o upload do arquivo:', error);
-        // Lide com erros, se necessário
       }
     );
   }
+  generateReport(){
+    const dataToSend = {
+      selectedOperation: this.selectedOperation,
+      selectedDate: this.selectedDate
+    };
+    this.reportGenerated = false;
+    this.reportGeneratorService.sendData(dataToSend).subscribe(
+      response => {
+        console.log('Resposta do servidor teste:', response);
+      },
+      error => {
+        console.error('Erro ao fazer o upload do arquivo:', error);
+      }
+    );
+    this.sendFile();
+  }
 
   downloadReport(){
-    // Implement report generation logic here
-    // After generating the report, set reportGenerated to true and provide the download link.
     this.reportGeneratorService.generateReport().subscribe(response => {
-      // Crie um objeto URL para o arquivo baixado
       const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       const url = window.URL.createObjectURL(blob);
 
-      // Crie um link para fazer o download do arquivo
       const a = document.createElement('a');
       a.href = url;
       a.download = 'arquivo.xlsx';
       a.click();
 
-      // Libere a URL criada para o objeto Blob
       window.URL.revokeObjectURL(url);
     });
   }

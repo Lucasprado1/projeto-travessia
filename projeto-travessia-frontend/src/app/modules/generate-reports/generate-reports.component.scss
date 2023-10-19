@@ -1,45 +1,75 @@
 .container {
-    height: 500%;
+    height: 100vh;
     width: 100%;
+    max-height: 200vh;
     position: auto;
     overflow-y: auto;
     margin: 0;
     padding: 0; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #222831;
 }
 .body {
-    background-color: antiquewhite;
+    height: 90%;
+    width: 35%;
     margin-top: 10%;
     justify-content: center;
     flex-direction: column;
     align-items: center !important;
-    
-    height: 80%;
-    width: 80%;
 }
 .body div p{
     font-weight:700;
-    font-size: 3vh;
+    font-size: 300%;
     color: #eeeeeebe;
     float:left;
 }
 .body div{
     display: flex;
     align-items: center;
-    align-items: left;
-    margin: 2vh;
+    margin: 1vh;
 }
 .file-input {
     display: none;
+    float: right;
 }
 .attach-file-class{
-    box-shadow: -5px 0 5px -5px rgba(0, 0, 0, 0.5), 5px 0 5px -5px rgba(0, 0, 0, 0.5);
-    max-height: 10vh;
+    box-shadow: -5px 0 5px -5px rgba(0, 0, 0, 0.25), 5px 0 5px -5px rgba(0, 0, 0, 0.25);
+    height: 7%;
+    justify-content: right;
     background-color: #4A4A4A;
-    width: 100vh;
-    margin: 0;
-    padding: 0;
+    width: 97%;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+}
+.button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 0.8vh;
+    border-radius: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px rgb(0, 0, 0); 
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #393E46; 
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #b0bec5; 
+    border-radius: 10px;
 }
 

@@ -5,9 +5,11 @@ import os
 from openpyxl.formula.translate import Translator #copy formula
 from flask_cors import CORS
 from openpyxl.styles import Protection
-
+import datetime
 
 DIRETORIO = "./sources"
+
+global_filename = None
 
 api = Flask(__name__)
 CORS(api)
@@ -36,16 +38,32 @@ def get_arquivo(nome_do_arquivo):
 
 @api.route("/arquivos", methods=["POST"])
 def post_arquivo():
+    global global_filename
     uploaded_file = request.files['file']
     if uploaded_file.filename != '':
         print(uploaded_file)
         nome_do_arquivo = uploaded_file.filename
         uploaded_file.save(os.path.join(DIRETORIO, nome_do_arquivo))
-        neo_report_model(uploaded_file.filename) # NEO model pattern 
+        global_filename = uploaded_file.filename
+        # neo_report_model(uploaded_file.filename) # NEO model pattern 
         return '', 201
     else:
         return 'Nenhum arquivo selecionado.'
+
+@api.route("/data", methods=["POST"])
+def post_data():
+    global global_filename
+    if request.is_json:
+        data = request.get_json()
+        print('Data received:', data)
+        if(global_filename): # variável global contendo o filename
+            neo_report_model(global_filename, data) 
+        return jsonify({"message": "Dados recebidos com sucesso!"}), 200
+    else:
+        return jsonify({"error": "Solicitação inválida. Certifique-se de enviar dados JSON."}), 400
+
     
+     
 
 
 # =================================== inicio ==============================
@@ -77,7 +95,12 @@ def paste_base_contratos(origin_working_tab, max_row_size, target_working_tab):
     for row in origin_working_tab.iter_rows(min_row=2, max_row=max_row_size, min_col=1, max_col=1):
         for cell in row:
             array_duplicatas.append(cell.value)  
-    array_tratado = list(set(array_duplicatas))
+    array_tratado_1 = list(set(array_duplicatas))
+    array_tratado = []
+    for item in array_tratado_1:
+        if item is not None:
+            array_tratado.append(int(item))
+
     #cola formulas base contratos
     grab_formulas(3, len(array_tratado) + 2, target_working_tab, 3, 8)
 
@@ -88,9 +111,20 @@ def paste_base_contratos(origin_working_tab, max_row_size, target_working_tab):
             cell.value = array_tratado[i]
         i = i+1
 
+def insert_close_date(operation, closeDate, working_tab):
+    print("chegou na função de insert")
+    print('data na funcao', closeDate)
+    if(operation == 'Raposo'):
+        #cell = working_tab.cell(row=3, column=12)  # Coluna "L" (12ª coluna)
+        cell = working_tab.cell(row=1, column=1)
+        iso_date = datetime.datetime.strptime(closeDate, "%Y-%m-%dT%H:%M:%S.%fZ")
+        excelCloseDate = iso_date.strftime("%d/%m/%Y")
+        cell.value = excelCloseDate
 
-def neo_report_model(base_filename):
-    model_report_wb = load_workbook("sources/Modelo Relatório - NEO - RAPOSO.xlsx")
+def neo_report_model(base_filename, data):
+    print('data')
+    # model_report_wb = load_workbook("sources/Modelo Relatório - NEO - RAPOSO.xlsx")
+    model_report_wb = load_workbook("sources/Relatório 09.2023 - CRI Raposo MANUAL.xlsx")
     source_base = load_workbook(f"sources/{base_filename}")
     linhas_destino_recebimento = 0
     linhas_destino_recebiveis = 0
@@ -106,7 +140,10 @@ def neo_report_model(base_filename):
 
     aba_origem_recebiveis = source_base['Recebíveis']
     aba_destino_recebiveis = model_report_wb['Recebíveis']
-    
+
+    # inputa data de fechamento
+    insert_close_date(data["selectedOperation"], data["selectedDate"], aba_destino_recebiveis)
+
     #joga formula recebimento 
     grab_formulas(2, get_rows_number(aba_origem_recebimento),aba_destino_recebimento, 19, 26)
 
