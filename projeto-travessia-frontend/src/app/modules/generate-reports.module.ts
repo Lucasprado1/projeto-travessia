@@ -1,4 +1,8 @@
+// reports.module.ts
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { GenerateReportsComponent } from '../components/generate-reports/generate-reports.component';
+import { HeaderComponent } from '../components/header/header.component';
 import { BrowserModule } from '@angular/platform-browser';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -11,21 +15,16 @@ import {MatToolbarModule} from '@angular/material/toolbar'
 import {MatSelectModule} from '@angular/material/select';
 import {FormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
-import { AppRoutingModule } from './app-routing.module';
-import { GenerateReportsComponent } from './modules/generate-reports/generate-reports.component';
-import { HeaderComponent } from './modules/components/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 
+// Importe os módulos necessários do Angular Material
 
 @NgModule({
-  declarations: [
-    GenerateReportsComponent,
-    HeaderComponent
-  ],
+  declarations: [GenerateReportsComponent, HeaderComponent],
   imports: [
+    CommonModule, /* outros módulos necessários */
     BrowserModule,
-    AppRoutingModule,
     MatButtonModule,
     MatProgressSpinnerModule,
     MatDatepickerModule,
@@ -37,7 +36,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatSelectModule,
     FormsModule,
     MatIconModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
@@ -46,4 +45,4 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
   ],
   bootstrap: [GenerateReportsComponent]
 })
-export class AppModule { }
+export class ReportsModule {}
