@@ -1,0 +1,112 @@
+.login{
+    min-height: 100vh;
+}
+
+.panel{
+    .table{
+        margin-bottom:0;
+        border:0;
+    }&.panel-transparent{
+        border:0;
+        background-color: transparent;
+        box-shadow: 0 0 0 #000;
+        .panel-heading,
+        .panel-body{
+            background-color: transparent;
+            padding-left:0;
+            padding-right:0;
+        }
+    }
+}
+
+.panel-flat{
+    margin:0 !important;
+    border:1px solid #909FA7;
+}
+
+.panel-group{
+    .panel-flat{
+        box-shadow: 0 0 0 #000;
+        &:first-child{
+            border-radius: 4px 4px 0 0;
+        }
+        &:last-child{
+            border-radius: 0 0 4px 4px;
+        }
+    }
+}
+
+.panel-heading{
+    paneltool > a {
+        display: inline-block;
+        color: #fff;
+        width:2em;
+        text-align: center;
+    }
+
+    .panel-default &{
+        paneltool >a{
+            color: #c1c2c3;
+        }
+    }
+
+    > .label.pull-right{
+        margin-top: 3px;
+        + .label.pull-right{
+            margin-right: 10px;
+        }
+    }
+    &.panel-heading-collapsed{
+        border-radius:3px;
+    }
+}
+
+.wrapper{
+    position: relative;
+    width: 100%;
+    height: auto;
+    -webkit-overflow-scrolling: touch;
+
+    &.ng-leave{
+        display: none;
+    }
+
+    .vertical-center{
+        min-height: 100%;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.block-center{
+    margin: 0 auto;
+}
+
+.text-center{
+    text-align:center;
+}
+
+
+.pt{ padding-top:10px !important}
+
+.pb{ padding-bottom:10px !important}
+.pv{ @extend .pt; @extend .pb;}
+
+
+.btn{
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size:14px;
+    line-height:1.428571429;
+    border-radius:4px;
+}
+
