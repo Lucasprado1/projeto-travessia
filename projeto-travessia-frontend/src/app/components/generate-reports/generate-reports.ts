@@ -6,7 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GenerateReportsService {
-  private apiUrl = 'http://localhost:5000'; // URL da sua API Flask
+  // private apiUrl = 'http://localhost:5000'; 
+
+  private apiUrl = 'https://9193-2804-431-c7dd-e6d1-f44a-d668-f5e2-de6.ngrok-free.app' ; 
 
   constructor(private http: HttpClient) {}
 
@@ -22,10 +24,10 @@ export class GenerateReportsService {
     const formData: FormData = new FormData();
     formData.append('file', file);
 
-    return this.http.post<any>('http://localhost:5000/arquivos', formData);
+    return this.http.post<any>(`${this.apiUrl}/arquivos`, formData);
   }
 
   sendData(dataToSend: object) {
-    return this.http.post<any>('http://localhost:5000/data', dataToSend);
+    return this.http.post<any>(`${this.apiUrl}/data`, dataToSend);
   }
 }

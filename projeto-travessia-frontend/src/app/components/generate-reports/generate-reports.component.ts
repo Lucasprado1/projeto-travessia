@@ -48,24 +48,22 @@ export class GenerateReportsComponent {
   }
 
   triggerFileInput() {
-    console.log("clicou")
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
     if (fileInput) {
       fileInput.click();
     }
   }
-
   sendFile(): void { 
     this.isGenerating = true;
+    this.reportGenerated = false;
     if (!this.uploadedFile) {
       alert('Por favor, selecione um arquivo Excel antes de enviar.');
       return;
     }
     this.reportGeneratorService.uploadFile(this.uploadedFile).subscribe(
       response => {
-        console.log('Resposta do servidor:', response);
-        this.reportGenerated = true;
-        this.isGenerating = false;
+        console.log('Resposta do servidor:', response);  
+        this.generateReport();
       },
       error => {
         console.error('Erro ao fazer o upload do arquivo:', error);
@@ -77,16 +75,17 @@ export class GenerateReportsComponent {
       selectedOperation: this.selectedOperation,
       selectedDate: this.selectedDate
     };
-    this.reportGenerated = false;
     this.reportGeneratorService.sendData(dataToSend).subscribe(
       response => {
         console.log('Resposta do servidor teste:', response);
+        this.isGenerating = false;
+        this.reportGenerated = true;
       },
       error => {
         console.error('Erro ao fazer o upload do arquivo:', error);
       }
     );
-    this.sendFile();
+    // this.sendFile();
   }
 
   downloadReport(){
