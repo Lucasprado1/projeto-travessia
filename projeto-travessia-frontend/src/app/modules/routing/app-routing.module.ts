@@ -6,8 +6,17 @@ import { LoginComponent } from 'src/app/components/login/login.component';
 
 
 const routes: Routes = [
-  { path: '', component: LoginComponent }, // Rota raiz para o LoginComponent
-  { path: 'report', component: GenerateReportsComponent }, // Rota /report para o GenerateReportsComponent
+  { path: 'login', component: LoginComponent }, // Rota de login
+  {
+    path: 'report',
+    component: GenerateReportsComponent, // Componente de relatórios
+    children: [
+      // Rotas aninhadas que ficarão sob a rota /report
+      // Você pode adicionar rotas aninhadas aqui, se necessário
+    ],
+  },
+  { path: '', redirectTo: 'login', pathMatch: 'full' }, // Rota padrão: redireciona para login
+  { path: '**', redirectTo: 'login' }, // Redireciona para login em caso de rota desconhecida
 ];
 
 

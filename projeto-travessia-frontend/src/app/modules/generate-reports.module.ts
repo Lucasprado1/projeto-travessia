@@ -17,6 +17,7 @@ import {FormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { RouterModule } from '@angular/router';
 
 // Importe os módulos necessários do Angular Material
 
@@ -24,6 +25,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
   declarations: [GenerateReportsComponent, HeaderComponent],
   imports: [
     CommonModule, /* outros módulos necessários */
+    RouterModule,
     BrowserModule,
     MatButtonModule,
     MatProgressSpinnerModule,
