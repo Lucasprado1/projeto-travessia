@@ -42,7 +42,7 @@
         <p style="opacity: 0.20; color: #EEEEEE; margin-top: -0.5%; margin-left:3%">{{ fileName || "Nenhum arquivo foi selecionado"}}</p>
         <div class="button">
             <button [disabled] = "!fileName"
-            (click)="generateReport()"
+            (click)="sendFile()"
             mat-raised-button color="accent" 
             style="margin-top: 4.5vh; width: 180px; height: 50px; font-size: 14px;">
             {{fileName? "Gerar": "Aguardando Base..." }}
