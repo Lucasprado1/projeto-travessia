@@ -1,6 +1,7 @@
 // app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from 'src/app/components/auth.guard';
 import { GenerateReportsComponent } from 'src/app/components/generate-reports/generate-reports.component';
 import { LoginComponent } from 'src/app/components/login/login.component';
 
