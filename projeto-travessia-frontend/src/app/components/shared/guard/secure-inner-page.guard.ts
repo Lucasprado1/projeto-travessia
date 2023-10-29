@@ -1,13 +1,13 @@
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { AuthService } from '../components/shared/services/auth.service';
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class SecureInnerPageGuard implements CanActivate {
   constructor(private authService: AuthService, public router: Router) {}
   canActivate(
     next: ActivatedRouteSnapshot,
