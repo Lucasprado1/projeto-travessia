@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent }, // Rota de login
   {
     path: 'report',
-    component: GenerateReportsComponent, // Componente de relatórios
+    component: GenerateReportsComponent,
     children: [
       // Rotas aninhadas que ficarão sob a rota /report
       // Você pode adicionar rotas aninhadas aqui, se necessário

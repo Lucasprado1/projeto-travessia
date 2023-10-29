@@ -10,17 +10,18 @@
     justify-content: center;
     align-items: center;
     background-color: #222831;
+    // background-color: #393E46;
 }
 .body {
     height: 90%;
     width: 35%;
-    margin-top: 10%;
+    margin-top: 18%;
     justify-content: center;
     flex-direction: column;
     align-items: center !important;
 }
 .body div p{
-    font-weight:700;
+    font-weight:200;
     font-size: 300%;
     color: #eeeeeebe;
     float:left;
@@ -39,10 +40,20 @@
     height: 7%;
     justify-content: right;
     background-color: #4A4A4A;
+    position: relative;
     width: 97%;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    overflow: hidden;
 }
+.attach-file-class b{
+    position: absolute;
+    white-space: nowrap;
+    color: #FFFFFF99;
+    font-weight: 400;
+    font-size: 120%
+}
+
 .button{
     display: flex;
     align-items: center;
