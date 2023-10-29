@@ -3,10 +3,10 @@
 <div class="container">
     
     <div class="body">
-        <div style="margin-left: 20%">
-            <p>Gerador de Relatório</p>
+        <div style="margin-left: 36.8%;">
+            <p>REPORTS</p>
         </div>
-        <div>
+        <div style="margin-top: 7%">
             <mat-form-field style="width: 100%">
                 <mat-label>Selecione a operação</mat-label>
                 <mat-select [(ngModel)]="selectedOperation">
@@ -27,7 +27,7 @@
             </mat-form-field>
         </div>
         <div class="attach-file-class">
-            <b style="position:relative; display: block; margin-right: -24%; color: #FFFFFF99; font-weight: 410; text-align: center; white-space: nowrap"> {{fileName? "Base selecionada!": "Selecione a base" }} </b>
+            <b style="left: 2.3%;"> {{fileName? "Base selecionada!": "Selecione a base" }} </b>
 
             <input  type="file" class="file-input" (change)="onFileSelected($event)" id="fileInput">
            
@@ -52,16 +52,16 @@
         
 
         <div style="margin-top: 5vh;"class="attach-file-class">   
-            <b *ngIf="!fileName && !isGenerating" style="position:relative; display: block;  margin-right: -27.5%; color: #FFFFFF99; font-weight: 410; text-align: center; white-space: nowrap"> 
+            <b *ngIf="!fileName && !isGenerating" style=" left: 2.5%; "> 
                 {{"Aguardando arquivo"}} 
             </b>
-            <b *ngIf="fileName && !isGenerating && !reportGenerated" style="position:relative; display: block; margin-right: -25.5%; color: #FFFFFF99; font-weight: 410; text-align: center; white-space: nowrap"> 
+            <b *ngIf="fileName && !isGenerating && !reportGenerated" style="left: 3.5%; "> 
                 {{"Pronto para gerar"}}
             </b>
-            <b *ngIf="isGenerating && fileName" style="position:relative; display: block; margin-right: -24.5%; color: #FFFFFF99; font-weight: 410; text-align: center; white-space: nowrap"> 
+            <b *ngIf="isGenerating && fileName" style="left: 3.5%;"> 
                 {{"Gerando relatório" }} 
             </b>
-            <b *ngIf="reportGenerated" style="position:relative; display: block; margin-right: -27%; color: #FFFFFF99; font-weight: 410; text-align: center; white-space: nowrap"> 
+            <b *ngIf="reportGenerated" style="left: 3.5%;"> 
                 {{"Relatório disponível"}} 
             </b>
             <div style=" margin-left:95%"class="file-upload">
