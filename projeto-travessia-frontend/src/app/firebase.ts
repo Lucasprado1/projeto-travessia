@@ -1,4 +1,4 @@
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyBZsxzvNdHbkttwQhhmU-m15-dALNHVpcA",
   authDomain: "gyp-travessia.firebaseapp.com",
   projectId: "gyp-travessia",
