@@ -27,7 +27,7 @@
                         <div>
                             <mat-form-field style="width: 40vh; height: 7vh;">
                                 <mat-label>Password</mat-label>
-                                <input matInput [(ngModel)]="password" name="password" placeholder="Password" type="password">
+                                <input matInput [(ngModel)]="password" name="password" placeholder="Password" type="password" (keyup.enter)="login()">
                             </mat-form-field>
                         </div>
                     </div>                    
