@@ -1,9 +1,9 @@
-export const firebaseConfig = {
-    apiKey: "AIzaSyCMcPvdi96rE-EpW1n2RBR2_BJQRf0Ksvc",
-    authDomain: "travessia-app-182.firebaseapp.com",
-    projectId: "travessia-app-182",
-    storageBucket: "travessia-app-182.appspot.com",
-    messagingSenderId: "96133990581",
-    appId: "1:96133990581:web:b8c86d1e1e7c0033fd16fc",
-    measurementId: "G-0S6CK177LB"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyBZsxzvNdHbkttwQhhmU-m15-dALNHVpcA",
+  authDomain: "gyp-travessia.firebaseapp.com",
+  projectId: "gyp-travessia",
+  storageBucket: "gyp-travessia.appspot.com",
+  messagingSenderId: "469024915694",
+  appId: "1:469024915694:web:9bf7729887bda2813d73ff",
+  measurementId: "G-B5LM06S4NB"
+};
