@@ -22,7 +22,6 @@ import { firebaseConfig } from '../firebase';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app'
 import { AuthService } from '../components/shared/services/auth.service';
-import { HttpHeaders } from '@angular/common/http';
 
 
 @NgModule({
@@ -44,7 +43,6 @@ import { HttpHeaders } from '@angular/common/http';
     MatIconModule,
     MatInputModule,
     HttpClientModule,
-    HttpHeaders,
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => getAuth())
   ],
