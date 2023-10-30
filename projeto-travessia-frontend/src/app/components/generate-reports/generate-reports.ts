@@ -6,9 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GenerateReportsService {
+
   //private apiUrl = 'http://localhost:5000'; 
 
   private apiUrl = 'https://aa22-2804-431-c7dd-15d1-b815-4708-d078-bcf6.ngrok-free.app' ; 
+
 
   constructor(private http: HttpClient) {}
 
