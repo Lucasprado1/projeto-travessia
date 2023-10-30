@@ -24,7 +24,7 @@
     align-items: center;
     justify-content: center;
     width: 130%;
-    height: 30%;
+    height: 40%;
     border-radius:4px;
     border:1px solid #909FA7;
 }
@@ -102,7 +102,7 @@
 .pt{ padding-top:10px !important}
 
 .pb{ padding-bottom:10px !important}
-.pv{ @extend .pt; @extend .pb;}
+.pv{ @extend .pt; @extend .pb; color: #FFFFFF99;}
 
 
 .btn{
@@ -121,5 +121,7 @@
     font-size:14px;
     line-height:1.428571429;
     border-radius:4px;
+    background-color: #4a4a4a;
+    color: #FFFFFF99;
 }
 

@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import 'firebase/auth';
+import {getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { Auth } from '@angular/fire/auth';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,11 +11,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 
-export class LoginComponent {
-  constructor(private router: Router) {}
-    login(){
-      if(1+1 == 2){
-        this.router.navigate(['/report']);
-      }
+export class LoginComponent implements OnInit {
+  public userName = '';
+  public password = '';
+ 
+  constructor(private router: Router, public authService: AuthService) {}
+
+  ngOnInit(): void {
+    
+  }
+
+  login() {
+    this.authService.Login(this.userName, this.password)
     }
 }

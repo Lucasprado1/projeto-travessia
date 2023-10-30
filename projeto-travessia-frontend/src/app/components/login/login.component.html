@@ -9,21 +9,29 @@
 <div class="wrapper vertical-center login">
     <div class="block-center mt-xl wd-xl">
         <div class="panel panel-flat">
-            <div class="panel-heading text-center">
-                <a href="">
+            <div class="panel-heading text-center">      
                     <img class="block-center img-rounded" src="assets/img/travessia-logo.png" alt="Travessia">
-                </a>
             </div>
             <div class="panel-body">
                 <p class="text-center pv">SIGN IN TO CONTINUE</p>
                 <div class="text-center">
                     <div class="row">
-                        <input type="text" class="text-center">
+                        <div>
+                            <mat-form-field style="width: 40vh; height: 7vh;">
+                                <mat-label>Username</mat-label>
+                                <input matInput [(ngModel)]="userName" name="userName" placeholder="Username">
+                            </mat-form-field>
+                        </div>
                     </div>
                     <div class="row">
-                        <input type="text" class="text-center">
-                    </div>
-                    <button class="btn btn-block btn-primaty mt-lg">Login</button>
+                        <div>
+                            <mat-form-field style="width: 40vh; height: 7vh;">
+                                <mat-label>Password</mat-label>
+                                <input matInput [(ngModel)]="password" name="password" placeholder="Password" type="password" (keyup.enter)="login()">
+                            </mat-form-field>
+                        </div>
+                    </div>                    
+                    <button class="btn btn-block btn-primaty mt-lg" (click)="login()">Login</button>
                 </div>
             </div>
         </div>
