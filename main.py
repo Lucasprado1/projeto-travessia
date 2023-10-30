@@ -373,4 +373,6 @@ def neo_report_model_fives(base_filename, data):
 
 
 if __name__ == '__main__':
-    api.run(debug=True)
+    api.run(host='127.0.0.1', port=5000, debug=True, threaded=True)   
+
+    

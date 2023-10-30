@@ -1,23 +1,30 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GenerateReportsService {
-  // private apiUrl = 'http://localhost:5000'; 
+  //private apiUrl = 'http://localhost:5000'; 
 
-  private apiUrl = 'https://2ddc-2804-431-c7dd-15d1-b815-4708-d078-bcf6.ngrok-free.app' ; 
+  private apiUrl = 'https://aa22-2804-431-c7dd-15d1-b815-4708-d078-bcf6.ngrok-free.app' ; 
 
   constructor(private http: HttpClient) {}
 
   generateReport(): Observable<any> {
-    // Simulação de uma chamada HTTP para gerar um relatório
-    // Substitua este código pela lógica real de geração de relatórios
-    return this.http.get<any>(`${this.apiUrl}/arquivos/ModeloNEOEdited.xlsx`, {
-      responseType: 'blob' as 'json' // Defina o responseType como blob
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': '69420'
     });
+    const options = {
+      responseType: 'blob' as 'json', // Define o responseType como blob
+      headers: headers // Adicione os cabeçalhos ao objeto de opções
+    };
+
+    return this.http.get<any>(`${this.apiUrl}/arquivos/ModeloNEOEdited.xlsx`,  Object.assign({},{
+      responseType: 'blob' as 'json', // Defina o responseType como blobs
+    }, options)
+    );
   }
 
   uploadFile(file: File) {
