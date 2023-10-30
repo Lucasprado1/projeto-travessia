@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { GenerateReportsService } from './generate-reports';
+import * as moment from 'moment';
 interface Operation {
   value: string;
   viewValue: string;
@@ -95,7 +96,7 @@ export class GenerateReportsComponent {
 
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'arquivo.xlsx';
+      a.download = "Relatorio_" + this.selectedOperation+ "_" + moment(this.selectedDate).format("MM-YYYY") + '.xlsx';
       a.click();
 
       window.URL.revokeObjectURL(url);
@@ -103,3 +104,5 @@ export class GenerateReportsComponent {
   }
   
 }
+
+

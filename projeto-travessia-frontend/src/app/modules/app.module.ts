@@ -23,6 +23,7 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app'
 import { AuthService } from '../components/shared/services/auth.service';
 
+
 @NgModule({
   declarations: [AppShellComponent, LoginComponent], // Declare apenas o LoginComponent
   imports: [
