@@ -7,14 +7,14 @@ import { Observable } from 'rxjs';
 })
 export class GenerateReportsService {
 
-  //private apiUrl = 'http://localhost:5000'; 
+  private apiUrl = 'http://localhost:5000'; 
 
-  private apiUrl = 'https://aa22-2804-431-c7dd-15d1-b815-4708-d078-bcf6.ngrok-free.app' ; 
+  // private apiUrl = 'https://aa22-2804-431-c7dd-15d1-b815-4708-d078-bcf6.ngrok-free.app' ; 
 
 
   constructor(private http: HttpClient) {}
 
-  generateReport(): Observable<any> {
+  generateReport(dataToReceive: any): Observable<any> {
     const headers = new HttpHeaders({
       'ngrok-skip-browser-warning': '69420'
     });
@@ -23,7 +23,7 @@ export class GenerateReportsService {
       headers: headers // Adicione os cabeçalhos ao objeto de opções
     };
 
-    return this.http.get<any>(`${this.apiUrl}/arquivos/ModeloNEOEdited.xlsx`,  Object.assign({},{
+    return this.http.get<any>(`${this.apiUrl}/arquivos/EDT-${dataToReceive.selectedOperation}-${dataToReceive.userEmail}.xlsx`,  Object.assign({},{
       responseType: 'blob' as 'json', // Defina o responseType como blobs
     }, options)
     );

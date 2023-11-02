@@ -22,6 +22,8 @@ import { firebaseConfig } from '../firebase';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app'
 import { AuthService } from '../components/shared/services/auth.service';
+import { AngularFireModule} from '@angular/fire/compat'
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -43,6 +45,8 @@ import { AuthService } from '../components/shared/services/auth.service';
     MatIconModule,
     MatInputModule,
     HttpClientModule,
+    MatSnackBarModule,
+    AngularFireModule.initializeApp(firebaseConfig),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => getAuth())
   ],

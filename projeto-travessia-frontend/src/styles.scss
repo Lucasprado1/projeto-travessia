@@ -12,3 +12,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-typography{
     background-color: #222831;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.custom-snackbar {
+    background: #F44336;
+    color: white;
+}

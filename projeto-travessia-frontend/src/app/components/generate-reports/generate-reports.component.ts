@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { GenerateReportsService } from './generate-reports';
 import * as moment from 'moment';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 interface Operation {
   value: string;
   viewValue: string;
@@ -11,25 +14,42 @@ interface Operation {
   styleUrls: ['./generate-reports.component.scss'],
 })
 export class GenerateReportsComponent {
-
-  uploadedFile:  File | null = null;
+  user: any;
+  invalidFile: boolean = false;
+  userEmail: any;
+  uploadedFile: File | null = null;
   fileName: any;
   selectedDate: Date | null = null;
   selectedOperation: any;
   public isGenerating: boolean = false;
   public reportGenerated: boolean = false;
   public reportDownloadLink: string = '';
-  constructor(private reportGeneratorService: GenerateReportsService) {
-   
+  constructor(
+    private reportGeneratorService: GenerateReportsService,
+    private afAuth: AngularFireAuth,
+    private _snackBar: MatSnackBar
+  ) {
+    this.afAuth.authState.subscribe((user) => {
+      this.user = user;
+      this.userEmail = user?.email;
+    });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 10000,
+      panelClass: ['custom-snackbar']
+    });
   }
 
   operations: Operation[] = [
-    {value: 'Raposo', viewValue: 'Raposo'},
-    {value: 'Ibira', viewValue: 'Ibirapitanga/Terra Luz'},
-    {value: 'Atmosfera', viewValue: 'Atmosfera'},
+    { value: 'Raposo', viewValue: 'Raposo' },
+    { value: 'Ibira', viewValue: 'Ibirapitanga/Terra Luz' },
+    { value: 'Atmosfera', viewValue: 'Atmosfera' },
+
+    { value: 'FiveSenses', viewValue: 'Five Senses' },
     // {value: 'Barbosa', viewValue: 'Barbosa'},
     // {value: 'Barreiras', viewValue: 'Barreiras'},
-    {value: 'FiveSenses', viewValue: 'Five Senses'},
     // {value: 'GramPoeme', viewValue: 'Gram Poeme'},
     // {value: 'LotesCia', viewValue: 'Lotes & Cia'},
     // {value: 'Ommar', viewValue: 'Ommar'},
@@ -38,13 +58,20 @@ export class GenerateReportsComponent {
     // {value: 'Pardini', viewValue: 'Pardini'},
     // {value: 'Dpaula', viewValue: 'D` Paula'},
   ];
-  
+
 
   onFileSelected(event: any) {
     this.uploadedFile = event.target.files[0];
-    if(this.uploadedFile){
-      console.log(this.uploadedFile.name)
+    if (this.uploadedFile) {
+
       this.fileName = this.uploadedFile?.name;
+      if (this.fileName.slice(-4) != 'xlsx' || this.fileName.slice(-4) != 'xlsb') {
+        this.openSnackBar('Certifique-se de enviar arquivos com as extensões .xlsx ou .xlsb', 'Fechar');
+        this.invalidFile = true;
+      }
+      else {
+        this.invalidFile = false;
+      }
     }
   }
 
@@ -54,55 +81,68 @@ export class GenerateReportsComponent {
       fileInput.click();
     }
   }
-  sendFile(): void { 
-    this.isGenerating = true;
-    this.reportGenerated = false;
-    if (!this.uploadedFile) {
-      alert('Por favor, selecione um arquivo Excel antes de enviar.');
-      return;
+  sendFile(): void {
+    if (this.invalidFile) {
+      this.openSnackBar('Existem campos inválidos', 'Fechar');
     }
-    this.reportGeneratorService.uploadFile(this.uploadedFile).subscribe(
-      response => {
-        console.log('Resposta do servidor:', response);  
-        this.generateReport();
-      },
-      error => {
-        console.error('Erro ao fazer o upload do arquivo:', error);
+    else {
+      this.isGenerating = true;
+      this.reportGenerated = false;
+      if (!this.uploadedFile) {
+        alert('Por favor, selecione um arquivo Excel antes de enviar.');
+        return;
       }
-    );
+
+      this.reportGeneratorService.uploadFile(this.uploadedFile).subscribe(
+        (response: any) => {
+          console.log('Resposta do servidor:', response);
+          this.generateReport();
+        },
+        (error: any) => {
+          console.error('Erro ao fazer o upload do arquivo:', error);
+        }
+      );
+
+    }
+
   }
-  generateReport(){
+  generateReport() {
     const dataToSend = {
       selectedOperation: this.selectedOperation,
-      selectedDate: this.selectedDate
+      selectedDate: this.selectedDate,
+      userEmail: this.userEmail.split('@')[0]
     };
     this.reportGeneratorService.sendData(dataToSend).subscribe(
-      response => {
+      (response: any) => {
         console.log('Resposta do servidor teste:', response);
         this.isGenerating = false;
         this.reportGenerated = true;
       },
-      error => {
+      (error: any) => {
         console.error('Erro ao fazer o upload do arquivo:', error);
       }
     );
     // this.sendFile();
   }
 
-  downloadReport(){
-    this.reportGeneratorService.generateReport().subscribe(response => {
+  downloadReport() {
+    const dataToReceive = {
+      selectedOperation: String = this.selectedOperation,
+      userEmail: String = this.userEmail.split('@')[0]
+    };
+    this.reportGeneratorService.generateReport(dataToReceive).subscribe((response: BlobPart) => {
       const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       const url = window.URL.createObjectURL(blob);
 
       const a = document.createElement('a');
       a.href = url;
-      a.download = "Relatorio_" + this.selectedOperation+ "_" + moment(this.selectedDate).format("MM-YYYY") + '.xlsx';
+      a.download = "Relatorio_" + this.selectedOperation + "_" + moment(this.selectedDate).format("MM-YYYY") + '.xlsx';
       a.click();
 
       window.URL.revokeObjectURL(url);
     });
   }
-  
+
 }
 
 
