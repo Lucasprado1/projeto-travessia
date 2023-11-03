@@ -17,7 +17,7 @@
                 <div class="text-center">
                     <div class="row">
                         <div>
-                            <mat-form-field style="width: 40vh; height: 8vh;">
+                            <mat-form-field class = "login-button">
                                 <mat-label>Username</mat-label>
                                 <input matInput [(ngModel)]="userName" name="userName" placeholder="Username">
                             </mat-form-field>
@@ -25,7 +25,7 @@
                     </div>
                     <div class="row">
                         <div>
-                            <mat-form-field style="width: 40vh; height: 8vh;">
+                            <mat-form-field class = "login-button">
                                 <mat-label>Password</mat-label>
                                 <input matInput [(ngModel)]="password" name="password" placeholder="Password" type="password" (keyup.enter)="login()">
                             </mat-form-field>

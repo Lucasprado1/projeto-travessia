@@ -19,16 +19,29 @@
     }
 }
 
-.panel-flat{
-    margin:0 !important;
+.panel-flat {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    border-radius: 4px;
+    border: 1px solid #909FA7;
+    background-color: #393E46;
     width: 130%;
     height: 40%;
-    border-radius:4px;
-    border:1px solid #909FA7;
-    background-color: #393E46;
+    max-width: 1000px; /* Defina um valor máximo se desejar */
+    max-height: 1000px; /* Defina um valor máximo se desejar */
+    min-width: 400px;
+    min-height: 400px;
 }
+
+.login-button{
+    width: 50vh;
+    min-width: 400px;
+    max-width: 800px;
+    //height: 8vh;
+}
+
 
 .panel-group{
     .panel-flat{
