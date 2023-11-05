@@ -29,6 +29,10 @@ export class GenerateReportsService {
     );
   }
 
+  getOperations(){
+    return this.http.get<any>(`${this.apiUrl}/operacoes`);
+  }
+
   uploadFile(file: File) {
     const formData: FormData = new FormData();
     formData.append('file', file);

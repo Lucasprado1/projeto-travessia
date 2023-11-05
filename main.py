@@ -9,6 +9,7 @@ from openpyxl.styles import Protection
 import datetime
 import pyxlsb
 import openpyxl
+import pandas as pd
 
 DIRETORIOBASES = "./sources/bases/"
 DIRETORIO = "./sources/"
@@ -39,6 +40,10 @@ def lista_arquivos():
 @api.route("/arquivos/<nome_do_arquivo>",  methods=["GET"])
 def get_arquivo(nome_do_arquivo):
     return send_from_directory(DIRETORIO, nome_do_arquivo, as_attachment=True)
+
+@api.route("/operacoes",  methods=["GET"])
+def get_operacoes():
+    return get_column_values("./base_operacoes.xlsx", "idOperation")
 
 
 @api.route("/arquivos", methods=["POST"])
@@ -74,12 +79,12 @@ def define_operation(global_filename, data):
     print("define operation", global_filename, data)
     if(data["selectedOperation"] == 'Raposo'):
         neo_report_model_raposo(global_filename, data)
-    elif(data["selectedOperation"] == 'Ibira'):
+    elif(data["selectedOperation"] == 'Ibirapitanga/Terra Luz'):
         convert_xlsb_to_xlsx(f"sources/bases/{global_filename}", "sources/bases/Modelo_ibira_convertido.xlsx")
         neo_report_model_ibira(global_filename, data)    
     elif(data["selectedOperation"] == 'Atmosfera'):
         neo_report_model_atmosfera(global_filename, data)
-    elif(data["selectedOperation"] == 'FiveSenses'):
+    elif(data["selectedOperation"] == 'Five Senses'):
         neo_report_model_fives(global_filename, data)
     else:
         print("Reading operation name Error")
@@ -160,7 +165,7 @@ def paste_base_contratos(origin_working_tab, max_row_size, target_working_tab, o
     array_tratado = []
     for item in array_tratado_1:
         if item is not None:
-            if operation == 'Ibira' or operation == 'Atmosfera' or operation == 'FiveSenses':
+            if operation == 'Ibirapitanga/Terra Luz' or operation == 'Atmosfera' or operation == 'Five Senses':
                 array_tratado.append(item)
             else:
                 array_tratado.append(int(item))
@@ -168,11 +173,11 @@ def paste_base_contratos(origin_working_tab, max_row_size, target_working_tab, o
     #cola formulas base contratos
     if (operation == 'Raposo'):
         grab_formulas(3, len(array_tratado) + 2, target_working_tab, 3, 8)
-    elif (operation == 'Ibira'):
+    elif (operation == 'Ibirapitanga/Terra Luz'):
         grab_formulas(3, len(array_tratado) + 2, target_working_tab, 3, 9)
     elif (operation == 'Atmosfera'):
         grab_formulas(3, len(array_tratado) + 2, target_working_tab, 3, 8)
-    elif (operation == 'FiveSenses'):
+    elif (operation == 'Five Senses'):
         grab_formulas(3, len(array_tratado) + 2, target_working_tab, 3, 8)        
     else:
         print("Error: Reading operation name on 'paste_base_contratos'")
@@ -361,6 +366,14 @@ def neo_report_model_fives(base_filename, data):
     
     model_report_wb.save(f"sources/EDT-{data["selectedOperation"]}-{data["userEmail"]}.xlsx")
 
+def get_column_values(caminho_arquivo, nome_coluna):
+    df = pd.read_excel(caminho_arquivo)
+    
+    if nome_coluna in df.columns:
+        valores_coluna = df[nome_coluna].tolist()
+        return valores_coluna
+    else:
+        return []
 
 
 if __name__ == '__main__':
