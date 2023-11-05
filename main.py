@@ -13,6 +13,7 @@ import pandas as pd
 
 DIRETORIOBASES = "./sources/bases/"
 DIRETORIO = "./sources/"
+DIRETORIO_OPERACOES = "./base_operacoes.xlsx"
 
 
 global_filename = None
@@ -43,7 +44,7 @@ def get_arquivo(nome_do_arquivo):
 
 @api.route("/operacoes",  methods=["GET"])
 def get_operacoes():
-    return get_column_values("./base_operacoes.xlsx", "idOperation")
+    return get_column_values(DIRETORIO_OPERACOES, "idOperation")
 
 
 @api.route("/arquivos", methods=["POST"])
@@ -51,13 +52,24 @@ def post_arquivo():
     global global_filename
     uploaded_file = request.files['file']
     if uploaded_file.filename != '':
-        print(uploaded_file)
         nome_do_arquivo = uploaded_file.filename
         uploaded_file.save(os.path.join(DIRETORIOBASES, nome_do_arquivo))
         global_filename = uploaded_file.filename
         return '', 201
     else:
         return 'Nenhum arquivo selecionado.'
+
+@api.route("/uploadModelo", methods=["POST"])
+def post_upload_modelo():
+    global global_filename
+    uploaded_file = request.files['file']
+    if uploaded_file.filename != '':
+        nome_do_arquivo = uploaded_file.filename
+        uploaded_file.save(os.path.join(DIRETORIO, nome_do_arquivo))
+        global_filename = uploaded_file.filename
+        return '', 201
+    else:
+        return 'Nenhum arquivo selecionado.', 400
 
 @api.route("/data", methods=["POST"])
 def post_data():
@@ -70,6 +82,17 @@ def post_data():
         return jsonify({"message": "Dados recebidos com sucesso!"}), 200
     else:
         return jsonify({"error": "Solicitação inválida. Certifique-se de enviar dados JSON."}), 400
+
+@api.route("/checkValues", methods=["POST"])
+def check_values():
+    data = request.get_json()
+    print(data)
+    canCreate = verifyOperations(data)
+    print(canCreate)
+    if canCreate:
+        return jsonify({"message": "É possível criar essa operação!"}), 200
+    else:
+        return jsonify({"error": "Solicitação inválida. Nome da operação ou Excel ja existem em nossa base."}), 400
 
 # 'Raposo', 'Ibira', 'Atmosfera', 'Barbosa', 'Barreiras', 'FiveSenses', 'GramPoeme',
 #  'LotesCia', 'Ommar', 'PatioLusitania', 'EntreSerras', 'Pardini', 'Dpaula'    
@@ -375,6 +398,22 @@ def get_column_values(caminho_arquivo, nome_coluna):
     else:
         return []
 
+def verifyOperations(data):
+    try:
+        # Abre o arquivo Excel
+        df = pd.read_excel(DIRETORIO_OPERACOES)
+        # Verifica a existência dos valores nas colunas correspondentes
+        opId_exists = 'idOperation' in df and data['idOperation'] in df['idOperation'].values
+        excelName_exists = 'excelName' in df and data['excelName'] in df['excelName'].values 
+        if not (opId_exists or excelName_exists):
+            # Os valores não existem no Excel, então vamos inserir uma nova linha
+            nova_linha = pd.DataFrame(data, index=[0])  # Cria um novo DataFrame com os valores
+            df = pd.concat([df, nova_linha], ignore_index=True)  # Concatena o novo DataFrame ao original
+
+        df.to_excel(DIRETORIO_OPERACOES, index=False)  # Salva o DataFrame de volta no Excel
+        return not (opId_exists or excelName_exists)
+    except FileNotFoundError:
+        return False  # Se o arquivo não existe, retornar True
 
 if __name__ == '__main__':
     api.run(host='127.0.0.1', port=5000, debug=True, threaded=True)   
