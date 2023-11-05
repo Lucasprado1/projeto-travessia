@@ -40,7 +40,18 @@ export class GenerateReportsService {
     return this.http.post<any>(`${this.apiUrl}/arquivos`, formData);
   }
 
+  uploadTemplate(file: File) {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post<any>(`${this.apiUrl}/uploadModelo`, formData);
+  }
+
   sendData(dataToSend: object) {
     return this.http.post<any>(`${this.apiUrl}/data`, dataToSend);
+  }
+
+  checkOpValues(opObject: any){
+    return this.http.post<any>(`${this.apiUrl}/checkValues`, opObject);
   }
 }

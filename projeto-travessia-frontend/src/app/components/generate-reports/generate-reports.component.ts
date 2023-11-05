@@ -41,16 +41,7 @@ export class GenerateReportsComponent implements OnInit{
   }
   
   ngOnInit(): void {
-    this.reportGeneratorService.getOperations().subscribe(
-      (response: any) => {
-        response.forEach((op: any) => {
-          this.operations.push({value: op, viewValue: op})
-        })
-      },
-      (error: any) => {
-        console.error('Erro ao puxar operacoes:', error);
-      }
-    );
+    this.updateOperations();
   }
 
   openSnackBar(message: string, action: string) {
@@ -72,22 +63,7 @@ export class GenerateReportsComponent implements OnInit{
     a.download = 'template_modelo_NEO.xlsx';
     a.click();
   }
-  /* operations: Operation[] = [
-    { value: 'Raposo', viewValue: 'Raposo' },
-    { value: 'Ibira', viewValue: 'Ibirapitanga/Terra Luz' },
-    { value: 'Atmosfera', viewValue: 'Atmosfera' },
-    { value: 'FiveSenses', viewValue: 'Five Senses' },
-    // {value: 'Barbosa', viewValue: 'Barbosa'},
-    // {value: 'Barreiras', viewValue: 'Barreiras'},
-    // {value: 'GramPoeme', viewValue: 'Gram Poeme'},
-    // {value: 'LotesCia', viewValue: 'Lotes & Cia'},
-    // {value: 'Ommar', viewValue: 'Ommar'},
-    // {value: 'PatioLusitania', viewValue: 'Patio Lusitânia'},
-    // {value: 'EntreSerras', viewValue: 'Entre Serras/Residence'},
-    // {value: 'Pardini', viewValue: 'Pardini'},
-    // {value: 'Dpaula', viewValue: 'D` Paula'},
-  ]; */
-
+ 
   operations: Operation[] = [];
 
   onFileSelected(event: any) {
@@ -161,15 +137,37 @@ export class GenerateReportsComponent implements OnInit{
   }
 
   createOperation(){
+    console.log(this.opId)
+    console.log(this.templateName)
+    console.log(this.uploadedTemplate)
     /* aqui devemos conferir se o nome da operação + nome de excel são únicos no nosso controle, ou seja, 
     não pode existir nem um ID operação igual nem um nome de excel-modelo igual */
 
-    // Função que verifica se podemos criar nova op
-
-    // Função que com retorno positivo cria nova op
-
-    // Alterar isCreatingNewOp para false
-    this.isCreatingNewOp = false;
+    // Função que verifica se podemos criar nova op e insere em nosso excel de controle caso não tenha duplicata
+    this.reportGeneratorService.checkOpValues({idOperation: this.opId, excelName: this.templateName}).subscribe(
+      (response: any) => {
+        if (!this.uploadedTemplate) {
+          alert('Por favor, selecione um arquivo Excel antes de enviar.');
+          return;
+        }
+        this.reportGeneratorService.uploadTemplate(this.uploadedTemplate).subscribe(
+          (response: any) => {
+            this.updateOperations();
+            this.isCreatingNewOp = false;
+            this.openSnackBar('Operação criada com sucesso!', 'Fechar');
+          },
+          (error: any) => {
+            console.error('Falha ao subir modelo:', error);
+            this.openSnackBar('Erro no upload do modelo', 'Fechar');
+          }
+        );
+      },
+      (error: any) => {
+        console.error('Erro ao criar nova operação:', error);
+        this.openSnackBar('Nome da operação ou nome do excel ja consta em nossa base. Favor alterar.', 'Fechar');
+      }
+    );
+    
   }
   generateReport() {
     const dataToSend = {
@@ -206,6 +204,20 @@ export class GenerateReportsComponent implements OnInit{
 
       window.URL.revokeObjectURL(url);
     });
+  }
+
+  updateOperations(){
+    this.reportGeneratorService.getOperations().subscribe(
+      (response: any) => {
+        this.operations = [];
+        response.forEach((op: any) => {
+          this.operations.push({value: op, viewValue: op})
+        })
+      },
+      (error: any) => {
+        console.error('Erro ao puxar operacoes:', error);
+      }
+    );
   }
 
 }
