@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { GenerateReportsService } from './generate-reports';
 import * as moment from 'moment';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -12,7 +12,7 @@ interface Operation {
   templateUrl: './generate-reports.component.html',
   styleUrls: ['./generate-reports.component.scss'],
 })
-export class GenerateReportsComponent {
+export class GenerateReportsComponent implements OnInit{
   user: any;
   invalidFile: boolean = false;
   invalidTemplate: boolean = false;
@@ -28,6 +28,7 @@ export class GenerateReportsComponent {
   public isGenerating: boolean = false;
   public reportGenerated: boolean = false;
   public reportDownloadLink: string = '';
+
   constructor(
     private reportGeneratorService: GenerateReportsService,
     private afAuth: AngularFireAuth,
@@ -37,6 +38,19 @@ export class GenerateReportsComponent {
       this.user = user;
       this.userEmail = user?.email;
     });
+  }
+  
+  ngOnInit(): void {
+    this.reportGeneratorService.getOperations().subscribe(
+      (response: any) => {
+        response.forEach((op: any) => {
+          this.operations.push({value: op, viewValue: op})
+        })
+      },
+      (error: any) => {
+        console.error('Erro ao puxar operacoes:', error);
+      }
+    );
   }
 
   openSnackBar(message: string, action: string) {
@@ -58,11 +72,10 @@ export class GenerateReportsComponent {
     a.download = 'template_modelo_NEO.xlsx';
     a.click();
   }
-  operations: Operation[] = [
+  /* operations: Operation[] = [
     { value: 'Raposo', viewValue: 'Raposo' },
     { value: 'Ibira', viewValue: 'Ibirapitanga/Terra Luz' },
     { value: 'Atmosfera', viewValue: 'Atmosfera' },
-
     { value: 'FiveSenses', viewValue: 'Five Senses' },
     // {value: 'Barbosa', viewValue: 'Barbosa'},
     // {value: 'Barreiras', viewValue: 'Barreiras'},
@@ -73,8 +86,9 @@ export class GenerateReportsComponent {
     // {value: 'EntreSerras', viewValue: 'Entre Serras/Residence'},
     // {value: 'Pardini', viewValue: 'Pardini'},
     // {value: 'Dpaula', viewValue: 'D` Paula'},
-  ];
+  ]; */
 
+  operations: Operation[] = [];
 
   onFileSelected(event: any) {
     this.uploadedFile = event.target.files[0];
