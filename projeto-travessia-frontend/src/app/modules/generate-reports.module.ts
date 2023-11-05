@@ -18,6 +18,8 @@ import {MatIconModule} from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { RouterModule } from '@angular/router';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 // Importe os módulos necessários do Angular Material
 
@@ -39,11 +41,11 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     MatIconModule,
     HttpClientModule,
+    MatDialogModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     GenerateReportsComponent
-    
   ],
   bootstrap: [GenerateReportsComponent]
 })

@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { GenerateReportsService } from './generate-reports';
 import * as moment from 'moment';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 interface Operation {
   value: string;
   viewValue: string;
@@ -16,11 +15,16 @@ interface Operation {
 export class GenerateReportsComponent {
   user: any;
   invalidFile: boolean = false;
+  invalidTemplate: boolean = false;
   userEmail: any;
   uploadedFile: File | null = null;
+  uploadedTemplate: File | null = null;
   fileName: any;
+  templateName: any;
   selectedDate: Date | null = null;
   selectedOperation: any;
+  public isCreatingNewOp: boolean = false;
+  public opId: string = '';
   public isGenerating: boolean = false;
   public reportGenerated: boolean = false;
   public reportDownloadLink: string = '';
@@ -42,6 +46,18 @@ export class GenerateReportsComponent {
     });
   }
 
+  changeOption(){
+    this.isCreatingNewOp = !this.isCreatingNewOp;
+  }
+
+  downloadTemplate(){
+    const excelFilePath = 'assets/Modelo Relatório - NEO.xlsx'; 
+
+    const a = document.createElement('a');
+    a.href = excelFilePath;
+    a.download = 'template_modelo_NEO.xlsx';
+    a.click();
+  }
   operations: Operation[] = [
     { value: 'Raposo', viewValue: 'Raposo' },
     { value: 'Ibira', viewValue: 'Ibirapitanga/Terra Luz' },
@@ -62,15 +78,29 @@ export class GenerateReportsComponent {
 
   onFileSelected(event: any) {
     this.uploadedFile = event.target.files[0];
+    console.log(event.target.files[0])
     if (this.uploadedFile) {
-
       this.fileName = this.uploadedFile?.name;
-      if (this.fileName.slice(-4) != 'xlsx' || this.fileName.slice(-4) != 'xlsb') {
+      if (this.fileName.slice(-4) != 'xlsx' && this.fileName.slice(-4) != 'xlsb') {
         this.openSnackBar('Certifique-se de enviar arquivos com as extensões .xlsx ou .xlsb', 'Fechar');
         this.invalidFile = true;
       }
       else {
         this.invalidFile = false;
+      }
+    }
+  }
+
+  onTemplateSelected(event: any) {
+    this.uploadedTemplate = event.target.files[0];
+    if (this.uploadedTemplate) {
+      this.templateName = this.uploadedTemplate?.name;
+      if (this.templateName.slice(-4) != 'xlsx' && this.templateName.slice(-4) != 'xlsb') {
+        this.openSnackBar('Certifique-se de enviar arquivos com as extensões .xlsx ou .xlsb', 'Fechar');
+        this.invalidTemplate = true;
+      }
+      else {
+        this.invalidTemplate = false;
       }
     }
   }
@@ -81,6 +111,15 @@ export class GenerateReportsComponent {
       fileInput.click();
     }
   }
+
+  triggerTemplateInput() {
+    const templateInput = document.getElementById('templateInput') as HTMLInputElement;
+    if (templateInput) {
+      templateInput.click();
+    }
+  }
+
+
   sendFile(): void {
     if (this.invalidFile) {
       this.openSnackBar('Existem campos inválidos', 'Fechar');
@@ -105,6 +144,18 @@ export class GenerateReportsComponent {
 
     }
 
+  }
+
+  createOperation(){
+    /* aqui devemos conferir se o nome da operação + nome de excel são únicos no nosso controle, ou seja, 
+    não pode existir nem um ID operação igual nem um nome de excel-modelo igual */
+
+    // Função que verifica se podemos criar nova op
+
+    // Função que com retorno positivo cria nova op
+
+    // Alterar isCreatingNewOp para false
+    this.isCreatingNewOp = false;
   }
   generateReport() {
     const dataToSend = {

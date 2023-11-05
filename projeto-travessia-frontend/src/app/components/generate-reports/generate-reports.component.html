@@ -6,75 +6,138 @@
         <div style="margin-left: 36.8%;">
             <p>REPORTS</p>
         </div>
-        <div style="margin-top: 7%">
-            <mat-form-field style="width: 100%">
-                <mat-label>Selecione a operação</mat-label>
-                <mat-select [(ngModel)]="selectedOperation">
-                    <mat-option *ngFor="let operation of operations" [value]="operation.value">
-                        {{operation.viewValue}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field style="width: 100vh">
-                <mat-label>Data de Fechamento</mat-label>
-                <input matInput [matDatepicker]="picker"  [(ngModel)]="selectedDate">
 
-                <mat-hint style="opacity: 0.20; color: #EEEEEE">DD/MM/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-        </div>
-        <div class="attach-file-class">
-            <b style="left: 2.3%;"> {{fileName? "Base selecionada!": "Selecione a base" }} </b>
-
-            <input  type="file" class="file-input" (change)="onFileSelected($event)" id="fileInput">
-           
-            <div style=" margin-left:95%"class="file-upload" (click)="triggerFileInput()">
-                
-                <button mat-mini-fab style="margin-right: 80%" color="primary" color="accent" [disabled]="false" class="upload-btn">
-                    <mat-icon>attach_file</mat-icon>
-                </button>
-                
-            </div>
-        </div>
-        <p style="opacity: 0.20; color: #EEEEEE; margin-top: -0.5%; margin-left:3%">{{ fileName || "Nenhum arquivo foi selecionado"}}</p>
         <div class="button">
-            <button [disabled] = "!fileName"
-            (click)="sendFile()"
+            <button 
+            (click)="changeOption()"
             mat-raised-button color="accent" 
-            style="margin-top: 4.5vh; width: 180px; height: 50px; font-size: 14px;">
-            {{fileName? "Gerar": "Aguardando Base..." }}
+            style="margin-top: 2.5vh; width: 100%; height: 50px; font-size: 14px;">
+            {{!isCreatingNewOp? "Adicionar Nova Operação": "Cancelar" }}
             </button>
-
         </div>
-        
 
-        <div style="margin-top: 5vh;"class="attach-file-class">   
-            <b *ngIf="!fileName && !isGenerating" style=" left: 2.5%; "> 
-                {{"Aguardando arquivo"}} 
-            </b>
-            <b *ngIf="fileName && !isGenerating && !reportGenerated" style="left: 3.5%; "> 
-                {{"Pronto para gerar"}}
-            </b>
-            <b *ngIf="isGenerating && fileName" style="left: 3.5%;"> 
-                {{"Gerando relatório" }} 
-            </b>
-            <b *ngIf="reportGenerated" style="left: 3.5%;"> 
-                {{"Relatório disponível"}} 
-            </b>
-            <div style=" margin-left:95%"class="file-upload">
-                <button style="margin-right: 80%"mat-mini-fab color="primary" color="accent" 
-                [disabled]="!reportGenerated"
-                (click)="downloadReport()" [ngClass]="{'link': reportGenerated}"
-                class="download-btn">
-                    <mat-spinner *ngIf="isGenerating" color="accent" style="width: 3vh; height: 3vh;"></mat-spinner>
-                    <mat-icon style="text-align: justify ;float: left !important" *ngIf="!isGenerating">download_file</mat-icon>
+        <ng-container *ngIf = "!isCreatingNewOp">
+            <div style="margin-top: 4%">
+                <mat-form-field style="width: 100%">
+                    <mat-label>Selecione a operação</mat-label>
+                    <mat-select [(ngModel)]="selectedOperation">
+                        <mat-option *ngFor="let operation of operations" [value]="operation.value">
+                            {{operation.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field style="width: 100%" *ngIf = "isCreatingNewOp">
+                    <mat-label>Nome da operação</mat-label>
+                    <input matInput [(ngModel)]="opId" name="opId" placeholder="Nome da operação">
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 100vh">
+                    <mat-label>Data de Fechamento</mat-label>
+                    <input matInput [matDatepicker]="picker"  [(ngModel)]="selectedDate">
+    
+                    <mat-hint style="opacity: 0.20; color: #EEEEEE">DD/MM/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div class="attach-file-class">
+                <b style="left: 2.3%;"> {{fileName? "Base selecionada!": "Selecione a base" }} </b>
+    
+                <input  type="file" class="file-input" (change)="onFileSelected($event)" id="fileInput">
+               
+                <div style=" margin-left:95%"class="file-upload" (click)="triggerFileInput()">
+                    
+                    <button mat-mini-fab style="margin-right: 80%" color="primary" color="accent" [disabled]="false" class="upload-btn">
+                        <mat-icon>attach_file</mat-icon>
+                    </button>
+                    
+                </div>
+            </div>
+            <p style="opacity: 0.20; color: #EEEEEE; margin-top: -0.5%; margin-left:3%">{{ fileName || "Nenhum arquivo foi selecionado"}}</p>
+            <div class="button">
+                <button [disabled] = "!fileName"
+                (click)="sendFile()"
+                mat-raised-button color="accent" 
+                style="margin-top: 4.5vh; width: 180px; height: 50px; font-size: 14px;">
+                {{fileName? "Gerar": "Aguardando Base..." }}
                 </button>
+    
             </div>
             
-        </div>
-        <p *ngIf="!fileName" style="opacity: 0.20; color: #EEEEEE; margin-top: -0.5%; margin-left:3%">Nenhum arquivo foi selecionado</p>
+    
+            <div style="margin-top: 5vh;"class="attach-file-class">   
+                <b *ngIf="!fileName && !isGenerating" style=" left: 2.5%; "> 
+                    {{"Aguardando arquivo"}} 
+                </b>
+                <b *ngIf="fileName && !isGenerating && !reportGenerated" style="left: 3.5%; "> 
+                    {{"Pronto para gerar"}}
+                </b>
+                <b *ngIf="isGenerating && fileName" style="left: 3.5%;"> 
+                    {{"Gerando relatório" }} 
+                </b>
+                <b *ngIf="reportGenerated" style="left: 3.5%;"> 
+                    {{"Relatório disponível"}} 
+                </b>
+                <div style=" margin-left:95%"class="file-upload">
+                    <button style="margin-right: 80%"mat-mini-fab color="primary" color="accent" 
+                    [disabled]="!reportGenerated"
+                    (click)="downloadReport()" [ngClass]="{'link': reportGenerated}"
+                    class="download-btn">
+                        <mat-spinner *ngIf="isGenerating" color="accent" style="width: 3vh; height: 3vh;"></mat-spinner>
+                        <mat-icon style="text-align: justify ;float: left !important" *ngIf="!isGenerating">download_file</mat-icon>
+                    </button>
+                </div>
+                
+            </div>
+            <p *ngIf="!fileName" style="opacity: 0.20; color: #EEEEEE; margin-top: -0.5%; margin-left:3%">Nenhum arquivo foi selecionado</p>
+
+        </ng-container>
+        <ng-container *ngIf = "isCreatingNewOp">
+
+            <div style="margin-top: 4%">
+                <mat-form-field style="width: 100%">
+                    <mat-label>Nome da operação</mat-label>
+                    <input matInput [(ngModel)]="opId" name="opId" placeholder="Nome da operação">
+                </mat-form-field>
+            </div>
+
+            <div class="button-template">
+                <button 
+                (click)="downloadTemplate()"
+                mat-raised-button color="accent" 
+                style="width: 100%; height: 50px; font-size: 14px; margin-bottom:4%;">
+                Baixar template modelo
+                </button>
+            </div>
+
+            <div class="attach-file-class">
+                <b style="left: 2.3%;"> {{templateName? "Base selecionada!": "Selecione o modelo para nova operação" }} </b>
+    
+                <input  type="file" class="file-input" (change)="onTemplateSelected($event)" id="templateInput">
+               
+                <div style=" margin-left:95%"class="file-upload" (click)="triggerTemplateInput()">
+                    
+                    <button mat-mini-fab style="margin-right: 80%" color="primary" color="accent" [disabled]="false" class="upload-btn">
+                        <mat-icon>attach_file</mat-icon>
+                    </button>
+                    
+                </div>
+            </div>
+            <p style="opacity: 0.20; color: #EEEEEE; margin-top: -0.5%; margin-left:3%">{{ templateName || "Nenhum arquivo foi selecionado"}}</p>
+
+            <div class="button">
+                <button [disabled] = "!templateName"
+                (click)="createOperation()"
+                mat-raised-button color="accent" 
+                style="margin-top: 4.5vh; width: 180px; height: 50px; font-size: 14px;">
+                {{templateName? "Criar Nova Operação": "Aguardando Modelo..." }}
+                </button>
+    
+            </div>
+
+        </ng-container>
     </div>
 </div>

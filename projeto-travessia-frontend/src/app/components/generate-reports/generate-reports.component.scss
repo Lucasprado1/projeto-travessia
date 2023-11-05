@@ -60,6 +60,13 @@
     justify-content: center;
 }
 
+.button-template{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4%;
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 0.8vh;
