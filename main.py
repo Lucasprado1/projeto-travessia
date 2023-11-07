@@ -110,7 +110,9 @@ def define_operation(global_filename, data):
     elif(data["selectedOperation"] == 'Five Senses'):
         neo_report_model_fives(global_filename, data)
     else:
-        print("Reading operation name Error")
+        print("default model")
+        neo_default_pattern(global_filename, data)
+    
 
 def convert_xlsb_to_xlsx(input_xlsb_filename, output_xlsx_filename):
     # Abrir o arquivo .xlsb
@@ -188,10 +190,8 @@ def paste_base_contratos(origin_working_tab, max_row_size, target_working_tab, o
     array_tratado = []
     for item in array_tratado_1:
         if item is not None:
-            if operation == 'Ibirapitanga/Terra Luz' or operation == 'Atmosfera' or operation == 'Five Senses':
-                array_tratado.append(item)
-            else:
-                array_tratado.append(int(item))
+            array_tratado.append(item)
+
 
     #cola formulas base contratos
     if (operation == 'Raposo'):
@@ -203,7 +203,8 @@ def paste_base_contratos(origin_working_tab, max_row_size, target_working_tab, o
     elif (operation == 'Five Senses'):
         grab_formulas(3, len(array_tratado) + 2, target_working_tab, 3, 8)        
     else:
-        print("Error: Reading operation name on 'paste_base_contratos'")
+        grab_formulas(3, len(array_tratado) + 2, target_working_tab, 3, 13) 
+        
     # cola valores de array_tratado em aba base contratos
     i = 0
     for row in target_working_tab.iter_rows(min_row=3, max_row=len(array_tratado) + 2, min_col=2, max_col=2):
@@ -330,6 +331,37 @@ def neo_report_model_raposo(base_filename, data):
 
     # f"sources/bases/{data["userEmail"]}"
     model_report_wb.save(f"sources/EDT-{data["selectedOperation"]}-{data["userEmail"]}.xlsx")
+    
+
+def neo_default_pattern(base_filename, data):
+    print(data["userEmail"], 'data')
+    model_report_wb = load_workbook(f"sources/modelo - {data["selectedOperation"]}.xlsx")
+    source_base = load_workbook(f"sources/bases/{base_filename}")
+    
+
+    tabs = load_working_tabs(model_report_wb, source_base)
+
+    aba_origem_recebimento = tabs['aba_origem_recebimento'] # inicialização necessária para definir o 'intervalo_recebimento_origem'
+    aba_origem_recebiveis = tabs['aba_origem_recebiveis']   #                             ''
+
+    linhas_destino_recebiveis = 0
+    # inputa data de fechamento
+    insert_close_date(data["selectedOperation"], data["selectedDate"], tabs['aba_destino_recebiveis'])
+    #joga formula recebimento 
+    grab_formulas(2, get_rows_number(tabs['aba_origem_recebimento']),tabs['aba_destino_recebimento'], 19, 27)
+    #joga formula recebiveis
+    grab_formulas(7, get_rows_number(tabs['aba_origem_recebiveis']) + 5, tabs['aba_destino_recebiveis'], 13,20)
+
+    intervalo_recebimento_origem = f'A-2:R-{get_rows_number(aba_origem_recebimento)}'
+    intervalo_recebiveis_destino = f'A-7:L-{get_rows_number(aba_origem_recebiveis) + 7}'
+    intervalo_recebiveis_origem = f'A-2:L-{get_rows_number(aba_origem_recebiveis)}'
+    intervalo_relacao_contrato = f'A-2:K-{get_rows_number(aba_origem_recebiveis)}'
+
+    perform_data_copy_and_paste(tabs, intervalo_recebimento_origem, intervalo_recebiveis_destino, intervalo_recebiveis_origem, intervalo_relacao_contrato, intervalo_relacao_contrato, linhas_destino_recebiveis, data["selectedOperation"], get_rows_number(aba_origem_recebiveis), get_rows_number(aba_origem_recebiveis))
+
+    # f"sources/bases/{data["userEmail"]}"
+    model_report_wb.save(f"sources/EDT-{data["selectedOperation"]}-{data["userEmail"]}.xlsx")
+        
 
 def neo_report_model_atmosfera(base_filename, data):
     print('data')
