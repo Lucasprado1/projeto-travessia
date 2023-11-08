@@ -6,11 +6,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GenerateReportsService {
+  // yuri micropenis
 
-  private apiUrl = 'http://localhost:5000'; 
+  // private apiUrl = 'http://localhost:5000'; 
 
-  // private apiUrl = 'https://aa22-2804-431-c7dd-15d1-b815-4708-d078-bcf6.ngrok-free.app' ; 
-
+  private apiUrl = 'https://2a91-191-8-179-213.ngrok-free.app' ; //colar aqui o link referente a porta 5000 que apareceu no ngrok
+  // não esquecer de salvar o arquivo CTRL + S
+  // YURI INOKUTI: PRESTA ATENÇÃO PRA NÃO DEIXAR NENHUM ESPAÇO PARA OS LADOS ' TIPO ASSIM' 
+  //                                                                          ^
 
   constructor(private http: HttpClient) {}
 
@@ -30,7 +33,14 @@ export class GenerateReportsService {
   }
 
   getOperations(){
-    return this.http.get<any>(`${this.apiUrl}/operacoes`);
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': '69420'
+    });
+
+    const options = {
+      headers: headers // Adicione os cabeçalhos ao objeto de opções
+    };
+    return this.http.get<any>(`${this.apiUrl}/operacoes`, options);
   }
 
   uploadFile(file: File) {
@@ -40,12 +50,14 @@ export class GenerateReportsService {
     return this.http.post<any>(`${this.apiUrl}/arquivos`, formData);
   }
 
-  uploadTemplate(file: File) {
+  uploadTemplate(file: File, fileName: string) {
     const formData: FormData = new FormData();
     formData.append('file', file);
-
+    formData.append('fileName', fileName); // Adiciona o nome do arquivo à FormData
+  
     return this.http.post<any>(`${this.apiUrl}/uploadModelo`, formData);
   }
+  
 
   sendData(dataToSend: object) {
     return this.http.post<any>(`${this.apiUrl}/data`, dataToSend);

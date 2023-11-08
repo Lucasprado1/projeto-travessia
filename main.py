@@ -63,19 +63,22 @@ def post_arquivo():
 def post_upload_modelo():
     global global_filename
     uploaded_file = request.files['file']
-    if uploaded_file.filename != '':
-        nome_do_arquivo = uploaded_file.filename
-        uploaded_file.save(os.path.join(DIRETORIO, nome_do_arquivo))
-        global_filename = uploaded_file.filename
+    nome_do_arquivo = request.form['fileName']  # Obtém o nome do arquivo do formulário
+
+    if uploaded_file.filename != '' and nome_do_arquivo != '':
+        nome_do_arquivo_completo = os.path.join(DIRETORIO, nome_do_arquivo)
+        uploaded_file.save(nome_do_arquivo_completo)  # Salva o arquivo com o novo nome
+        global_filename = nome_do_arquivo
         return '', 201
     else:
-        return 'Nenhum arquivo selecionado.', 400
+        return 'Nenhum arquivo ou nome de arquivo selecionado.', 400
 
 @api.route("/data", methods=["POST"])
 def post_data():
     global global_filename
     if request.is_json:
         data = request.get_json()
+        print("===============================================================")
         print('Data received:', data)
         if(global_filename): # variável global contendo o filename
             define_operation(global_filename, data) 
@@ -99,7 +102,8 @@ def check_values():
 
 # =================================== inicio ==============================
 def define_operation(global_filename, data):
-    print("define operation", global_filename, data)
+    print("define operation", global_filename, data, global_filename[-4:])
+    
     if(data["selectedOperation"] == 'Raposo'):
         neo_report_model_raposo(global_filename, data)
     elif(data["selectedOperation"] == 'Ibirapitanga/Terra Luz'):
@@ -110,8 +114,14 @@ def define_operation(global_filename, data):
     elif(data["selectedOperation"] == 'Five Senses'):
         neo_report_model_fives(global_filename, data)
     else:
-        print("default model")
-        neo_default_pattern(global_filename, data)
+        if(global_filename[-4:] == "xlsb"):
+            global_filename_convertido = global_filename[:-5] + "_convertido.xlsx"
+            convert_xlsb_to_xlsx(f"sources/bases/{global_filename}", f"sources/bases/{global_filename_convertido}")
+            
+            neo_default_pattern(global_filename_convertido, data)
+        else:
+            print("default model")
+            neo_default_pattern(global_filename, data)
     
 
 def convert_xlsb_to_xlsx(input_xlsb_filename, output_xlsx_filename):
