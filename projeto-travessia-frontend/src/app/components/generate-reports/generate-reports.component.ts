@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { GenerateReportsService } from './generate-reports';
 import * as moment from 'moment';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -32,7 +32,8 @@ export class GenerateReportsComponent implements OnInit{
   constructor(
     private reportGeneratorService: GenerateReportsService,
     private afAuth: AngularFireAuth,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef
   ) {
     this.afAuth.authState.subscribe((user) => {
       this.user = user;
@@ -84,7 +85,9 @@ export class GenerateReportsComponent implements OnInit{
   onTemplateSelected(event: any) {
     this.uploadedTemplate = event.target.files[0];
     if (this.uploadedTemplate) {
-      this.templateName = this.uploadedTemplate?.name;
+      let extension = this.uploadedTemplate.name.split(".").slice(-1)[0];
+      this.templateName = "modelo - "+ this.opId +"." + extension;
+      console.log(this.templateName);
       if (this.templateName.slice(-4) != 'xlsx' && this.templateName.slice(-4) != 'xlsb') {
         this.openSnackBar('Certifique-se de enviar arquivos com as extensões .xlsx ou .xlsb', 'Fechar');
         this.invalidTemplate = true;
@@ -150,10 +153,9 @@ export class GenerateReportsComponent implements OnInit{
           alert('Por favor, selecione um arquivo Excel antes de enviar.');
           return;
         }
-        this.reportGeneratorService.uploadTemplate(this.uploadedTemplate).subscribe(
+        this.reportGeneratorService.uploadTemplate(this.uploadedTemplate, this.templateName).subscribe(
           (response: any) => {
             this.updateOperations();
-            this.isCreatingNewOp = false;
             this.openSnackBar('Operação criada com sucesso!', 'Fechar');
           },
           (error: any) => {
@@ -203,16 +205,22 @@ export class GenerateReportsComponent implements OnInit{
       a.click();
 
       window.URL.revokeObjectURL(url);
+      // this.selectedOperation = '';
+      // this.updateOperations();
+      location.reload();
     });
+    
   }
 
   updateOperations(){
+    this.cdr.detectChanges();
     this.reportGeneratorService.getOperations().subscribe(
       (response: any) => {
         this.operations = [];
         response.forEach((op: any) => {
           this.operations.push({value: op, viewValue: op})
         })
+        this.isCreatingNewOp = false;
       },
       (error: any) => {
         console.error('Erro ao puxar operacoes:', error);
