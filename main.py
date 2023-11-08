@@ -40,7 +40,8 @@ def lista_arquivos():
 
 @api.route("/arquivos/<nome_do_arquivo>",  methods=["GET"])
 def get_arquivo(nome_do_arquivo):
-    return send_from_directory(DIRETORIO, nome_do_arquivo, as_attachment=True)
+    sourceName= nome_do_arquivo.replace("/", "-")
+    return send_from_directory(DIRETORIO, sourceName, as_attachment=True)
 
 @api.route("/operacoes",  methods=["GET"])
 def get_operacoes():
@@ -106,7 +107,7 @@ def define_operation(global_filename, data):
     
     if(data["selectedOperation"] == 'Raposo'):
         neo_report_model_raposo(global_filename, data)
-    elif(data["selectedOperation"] == 'Ibirapitanga/Terra Luz'):
+    elif(data["selectedOperation"] == 'Ibirapitanga-Terra Luz'):
         convert_xlsb_to_xlsx(f"sources/bases/{global_filename}", "sources/bases/Modelo_ibira_convertido.xlsx")
         neo_report_model_ibira(global_filename, data)    
     elif(data["selectedOperation"] == 'Atmosfera'):
@@ -309,8 +310,8 @@ def neo_report_model_ibira(base_filename, data):
     intervalo_relacao_contrato_origem = f'A-2:L-{get_rows_number(aba_origem_relacao_contrato)}'
 
     perform_data_copy_and_paste(tabs, intervalo_recebimento_origem, intervalo_recebiveis_destino, intervalo_recebiveis_origem, intervalo_relacao_contrato, intervalo_relacao_contrato_origem, linhas_destino_recebiveis, data["selectedOperation"], get_rows_number(aba_origem_recebiveis), get_rows_number(aba_origem_relacao_contrato))
-
-    model_report_wb.save(f"sources/EDT-{data["selectedOperation"]}-{data["userEmail"]}.xlsx")
+    sourceName= data["selectedOperation"].replace("/", "-")
+    model_report_wb.save(f"sources/EDT-{sourceName}-{data["userEmail"]}.xlsx")
 
 def neo_report_model_raposo(base_filename, data):
     print(data["userEmail"], 'data')
@@ -370,7 +371,8 @@ def neo_default_pattern(base_filename, data):
     perform_data_copy_and_paste(tabs, intervalo_recebimento_origem, intervalo_recebiveis_destino, intervalo_recebiveis_origem, intervalo_relacao_contrato, intervalo_relacao_contrato, linhas_destino_recebiveis, data["selectedOperation"], get_rows_number(aba_origem_recebiveis), get_rows_number(aba_origem_recebiveis))
 
     # f"sources/bases/{data["userEmail"]}"
-    model_report_wb.save(f"sources/EDT-{data["selectedOperation"]}-{data["userEmail"]}.xlsx")
+    sourceName= data["selectedOperation"].replace("/", "-")
+    model_report_wb.save(f"sources/EDT-{sourceName}-{data["userEmail"]}.xlsx")
         
 
 def neo_report_model_atmosfera(base_filename, data):
