@@ -311,7 +311,7 @@ def neo_report_model_ibira(base_filename, data):
 
     perform_data_copy_and_paste(tabs, intervalo_recebimento_origem, intervalo_recebiveis_destino, intervalo_recebiveis_origem, intervalo_relacao_contrato, intervalo_relacao_contrato_origem, linhas_destino_recebiveis, data["selectedOperation"], get_rows_number(aba_origem_recebiveis), get_rows_number(aba_origem_relacao_contrato))
     sourceName= data["selectedOperation"].replace("/", "-")
-    model_report_wb.save(f"sources/EDT-{sourceName}-{data["userEmail"]}.xlsx")
+    model_report_wb.save(f"sources/EDT-{sourceName}-{data['userEmail']}.xlsx")
 
 def neo_report_model_raposo(base_filename, data):
     print(data["userEmail"], 'data')
@@ -341,12 +341,12 @@ def neo_report_model_raposo(base_filename, data):
     perform_data_copy_and_paste(tabs, intervalo_recebimento_origem, intervalo_recebiveis_destino, intervalo_recebiveis_origem, intervalo_relacao_contrato, intervalo_relacao_contrato, linhas_destino_recebiveis, data["selectedOperation"], get_rows_number(aba_origem_recebiveis), get_rows_number(aba_origem_recebiveis))
 
     # f"sources/bases/{data["userEmail"]}"
-    model_report_wb.save(f"sources/EDT-{data["selectedOperation"]}-{data["userEmail"]}.xlsx")
+    model_report_wb.save(f"sources/EDT-{data['selectedOperation']}-{data['userEmail']}.xlsx")
     
 
 def neo_default_pattern(base_filename, data):
     print(data["userEmail"], 'data')
-    model_report_wb = load_workbook(f"sources/modelo - {data["selectedOperation"]}.xlsx")
+    model_report_wb = load_workbook(f"sources/modelo - {data['selectedOperation']}.xlsx")
     source_base = load_workbook(f"sources/bases/{base_filename}")
     
 
@@ -372,7 +372,7 @@ def neo_default_pattern(base_filename, data):
 
     # f"sources/bases/{data["userEmail"]}"
     sourceName= data["selectedOperation"].replace("/", "-")
-    model_report_wb.save(f"sources/EDT-{sourceName}-{data["userEmail"]}.xlsx")
+    model_report_wb.save(f"sources/EDT-{sourceName}-{data['userEmail']}.xlsx")
         
 
 def neo_report_model_atmosfera(base_filename, data):
@@ -402,7 +402,7 @@ def neo_report_model_atmosfera(base_filename, data):
 
     perform_data_copy_and_paste(tabs, intervalo_recebimento_origem, intervalo_recebiveis_destino, intervalo_recebiveis_origem, intervalo_relacao_contrato, intervalo_relacao_contrato, linhas_destino_recebiveis, data["selectedOperation"], get_rows_number(aba_origem_recebiveis), get_rows_number(aba_origem_recebiveis))
 
-    model_report_wb.save(f"sources/EDT-{data["selectedOperation"]}-{data["userEmail"]}.xlsx")
+    model_report_wb.save(f"sources/EDT-{data['selectedOperation']}-{data['userEmail']}.xlsx")
 
 
 def neo_report_model_fives(base_filename, data):
@@ -431,7 +431,7 @@ def neo_report_model_fives(base_filename, data):
     intervalo_relacao_contrato = f'A-2:K-{get_rows_number(aba_origem_recebiveis)}'
     perform_data_copy_and_paste(tabs, intervalo_recebimento_origem, intervalo_recebiveis_destino, intervalo_recebiveis_origem, intervalo_relacao_contrato, intervalo_relacao_contrato, linhas_destino_recebiveis, data["selectedOperation"], get_rows_number(aba_origem_recebiveis), get_rows_number(aba_origem_recebiveis))
     
-    model_report_wb.save(f"sources/EDT-{data["selectedOperation"]}-{data["userEmail"]}.xlsx")
+    model_report_wb.save(f"sources/EDT-{data['selectedOperation']}-{data['userEmail']}.xlsx")
 
 def get_column_values(caminho_arquivo, nome_coluna):
     df = pd.read_excel(caminho_arquivo)
