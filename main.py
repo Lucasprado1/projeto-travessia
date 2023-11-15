@@ -1,3 +1,4 @@
+import shutil
 from flask import Flask, request, jsonify, send_from_directory, render_template
 from openpyxl.utils import FORMULAE
 from openpyxl import Workbook, load_workbook
@@ -108,8 +109,13 @@ def define_operation(global_filename, data):
     if(data["selectedOperation"] == 'Raposo'):
         neo_report_model_raposo(global_filename, data)
     elif(data["selectedOperation"] == 'Ibirapitanga-Terra Luz'):
-        convert_xlsb_to_xlsx(f"sources/bases/{global_filename}", "sources/bases/Modelo_ibira_convertido.xlsx")
-        neo_report_model_ibira(global_filename, data)    
+        if(global_filename[-4:] == "xlsb"):
+            convert_xlsb_to_xlsx(f"sources/bases/{global_filename}", "sources/bases/Modelo_ibira_convertido.xlsx")
+            neo_report_model_ibira(global_filename, data)  
+        else:
+            #Somente pega a base recebida e duplica ela com o nome Modelo_ibira_convertido
+            shutil.copy(f"sources/bases/{global_filename}", "sources/bases/Modelo_ibira_convertido.xlsx")
+            neo_report_model_ibira(global_filename, data) 
     elif(data["selectedOperation"] == 'Atmosfera'):
         neo_report_model_atmosfera(global_filename, data)
     elif(data["selectedOperation"] == 'Five Senses'):
