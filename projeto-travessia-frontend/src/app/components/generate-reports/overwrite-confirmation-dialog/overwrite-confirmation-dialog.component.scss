@@ -1,0 +1,25 @@
+.container{
+    z-index: 1;
+    padding: 2%;
+    max-width: 100%;
+    max-height: 99%;
+    overflow-y: hidden !important;
+    .button-row {
+        display: flex;
+        margin-left: 58%;
+        margin-top: 10%;
+        justify-content: space-evenly; 
+        
+        .button{
+            margin: 0 -1vh;
+        }
+    }
+}
+
+.container p{
+    margin-top: 5%;
+    margin-left: 5%;
+    font-weight:250;
+    font-size: 120%;
+    color: #eeeeeebe;
+}

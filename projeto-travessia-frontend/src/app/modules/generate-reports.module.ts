@@ -20,6 +20,7 @@ import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/materia
 import { RouterModule } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { OverwriteConfirmationDialogComponent } from '../components/generate-reports/overwrite-confirmation-dialog/overwrite-confirmation-dialog.component';
 
 
 // Importe os módulos necessários do Angular Material
@@ -36,7 +37,7 @@ const MY_DATE_FORMAT = {
 };
 
 @NgModule({
-  declarations: [GenerateReportsComponent, HeaderComponent],
+  declarations: [GenerateReportsComponent, HeaderComponent, OverwriteConfirmationDialogComponent],
   imports: [
     CommonModule, /* outros módulos necessários */
     RouterModule,
@@ -53,7 +54,8 @@ const MY_DATE_FORMAT = {
     FormsModule,
     MatIconModule,
     HttpClientModule,
-    MatDialogModule
+    MatDialogModule,
+    
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

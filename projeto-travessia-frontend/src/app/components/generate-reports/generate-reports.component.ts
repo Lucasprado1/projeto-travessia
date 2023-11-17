@@ -3,6 +3,8 @@ import { GenerateReportsService } from './generate-reports';
 import * as moment from 'moment';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { OverwriteConfirmationDialogComponent } from './overwrite-confirmation-dialog/overwrite-confirmation-dialog.component';
 interface Operation {
   value: string;
   viewValue: string;
@@ -33,7 +35,8 @@ export class GenerateReportsComponent implements OnInit{
     private reportGeneratorService: GenerateReportsService,
     private afAuth: AngularFireAuth,
     private _snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private dialog: MatDialog
   ) {
     this.afAuth.authState.subscribe((user) => {
       this.user = user;
@@ -43,6 +46,7 @@ export class GenerateReportsComponent implements OnInit{
   
   ngOnInit(): void {
     this.updateOperations();
+    this.abrirDialog();
   }
 
   openSnackBar(message: string, action: string) {
@@ -165,12 +169,33 @@ export class GenerateReportsComponent implements OnInit{
         );
       },
       (error: any) => {
-        console.error('Erro ao criar nova operação:', error);
-        this.openSnackBar('Nome da operação ou nome do excel ja consta em nossa base. Favor alterar.', 'Fechar');
+        // console.error('Erro ao criar nova operação:', error);
+        if(error.status == 400){
+          this.abrirDialog();
+        }
       }
     );
     
   }
+  abrirDialog(): void {
+    const dialogRef = this.dialog.open(OverwriteConfirmationDialogComponent, {
+      maxWidth: '180%', 
+      maxHeight: '30%',
+      minWidth: '35%', 
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog fechado. Resultado: ${result}`);
+      if(result){
+        // result voltou como true, então deve substituir a operação aqui
+        this.openSnackBar('Substituindo operação.', 'Fechar');
+      }
+      else{
+        this.openSnackBar('Substituição cancelada. Favor alterar o nome da nova operação.', 'Fechar');
+      }
+    });
+  }
+
   generateReport() {
     const dataToSend = {
       selectedOperation: this.selectedOperation.replace(/\//g, "-"),
