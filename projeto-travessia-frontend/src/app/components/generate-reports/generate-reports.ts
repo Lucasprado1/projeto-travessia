@@ -6,14 +6,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GenerateReportsService {
-  // yuri micropenis
+ 
 
   // private apiUrl = 'http://localhost:5000'; 
 
-  private apiUrl = 'https://2a91-191-8-179-213.ngrok-free.app' ; //colar aqui o link referente a porta 5000 que apareceu no ngrok
+  private apiUrl = 'https://84ad-201-68-213-170.ngrok-free.app' ; //colar aqui o link referente a porta 5000 que apareceu no ngrok
   // não esquecer de salvar o arquivo CTRL + S
-  // YURI INOKUTI: PRESTA ATENÇÃO PRA NÃO DEIXAR NENHUM ESPAÇO PARA OS LADOS ' TIPO ASSIM' 
-  //                                                                          ^
+                                                        
 
   constructor(private http: HttpClient) {}
 

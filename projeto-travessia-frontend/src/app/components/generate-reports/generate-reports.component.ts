@@ -147,7 +147,7 @@ export class GenerateReportsComponent implements OnInit{
     não pode existir nem um ID operação igual nem um nome de excel-modelo igual */
 
     // Função que verifica se podemos criar nova op e insere em nosso excel de controle caso não tenha duplicata
-    this.reportGeneratorService.checkOpValues({idOperation: this.opId, excelName: this.templateName}).subscribe(
+    this.reportGeneratorService.checkOpValues({idOperation: this.opId.replace(/\//g, "-"), excelName: this.templateName}).subscribe(
       (response: any) => {
         if (!this.uploadedTemplate) {
           alert('Por favor, selecione um arquivo Excel antes de enviar.');
@@ -173,7 +173,7 @@ export class GenerateReportsComponent implements OnInit{
   }
   generateReport() {
     const dataToSend = {
-      selectedOperation: this.selectedOperation,
+      selectedOperation: this.selectedOperation.replace(/\//g, "-"),
       selectedDate: this.selectedDate,
       userEmail: this.userEmail.split('@')[0]
     };
@@ -192,7 +192,7 @@ export class GenerateReportsComponent implements OnInit{
 
   downloadReport() {
     const dataToReceive = {
-      selectedOperation: String = this.selectedOperation,
+      selectedOperation: String = this.selectedOperation.replace(/\//g, "-"),
       userEmail: String = this.userEmail.split('@')[0]
     };
     this.reportGeneratorService.generateReport(dataToReceive).subscribe((response: BlobPart) => {
