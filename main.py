@@ -266,6 +266,7 @@ def perform_data_copy_and_paste(tabs, intervalo_recebimento_origem, intervalo_re
     intervalo_recebiveis_origem = set_ranges(intervalo_recebiveis_origem)
     intervalo_relacao_contrato = set_ranges(intervalo_relacao_contrato)
     intervalo_relacao_contrato_origem = set_ranges(intervalo_relacao_contrato_origem)
+    print('intervalo rela contratos', intervalo_relacao_contrato_origem)
 
     #cola recebimento 
     copy_and_paste_blocks(tabs['aba_origem_recebimento'], tabs['aba_destino_recebimento'],
@@ -330,6 +331,7 @@ def neo_report_model_raposo(base_filename, data):
 
     aba_origem_recebimento = tabs['aba_origem_recebimento'] # inicialização necessária para definir o 'intervalo_recebimento_origem'
     aba_origem_recebiveis = tabs['aba_origem_recebiveis']   #                             ''
+    aba_origem_relacao_contratos = tabs['aba_origem_relacao_contrato']   #  ''
 
     linhas_destino_recebiveis = 0
     # inputa data de fechamento
@@ -342,7 +344,7 @@ def neo_report_model_raposo(base_filename, data):
     intervalo_recebimento_origem = f'A-2:R-{get_rows_number(aba_origem_recebimento)}'
     intervalo_recebiveis_destino = f'A-7:L-{get_rows_number(aba_origem_recebiveis) + 7}'
     intervalo_recebiveis_origem = f'A-2:L-{get_rows_number(aba_origem_recebiveis)}'
-    intervalo_relacao_contrato = f'A-2:K-{get_rows_number(aba_origem_recebiveis)}'
+    intervalo_relacao_contrato = f'A-2:K-{get_rows_number(aba_origem_relacao_contratos)}'
 
     perform_data_copy_and_paste(tabs, intervalo_recebimento_origem, intervalo_recebiveis_destino, intervalo_recebiveis_origem, intervalo_relacao_contrato, intervalo_relacao_contrato, linhas_destino_recebiveis, data["selectedOperation"], get_rows_number(aba_origem_recebiveis), get_rows_number(aba_origem_recebiveis))
 
@@ -359,7 +361,8 @@ def neo_default_pattern(base_filename, data):
     tabs = load_working_tabs(model_report_wb, source_base)
 
     aba_origem_recebimento = tabs['aba_origem_recebimento'] # inicialização necessária para definir o 'intervalo_recebimento_origem'
-    aba_origem_recebiveis = tabs['aba_origem_recebiveis']   #                             ''
+    aba_origem_recebiveis = tabs['aba_origem_recebiveis']   #     
+    aba_origem_relacao_contratos = tabs['aba_origem_relacao_contrato']   #  ''
 
     linhas_destino_recebiveis = 0
     # inputa data de fechamento
@@ -368,11 +371,11 @@ def neo_default_pattern(base_filename, data):
     grab_formulas(2, get_rows_number(tabs['aba_origem_recebimento']),tabs['aba_destino_recebimento'], 19, 27)
     #joga formula recebiveis
     grab_formulas(7, get_rows_number(tabs['aba_origem_recebiveis']) + 5, tabs['aba_destino_recebiveis'], 13,20)
-
+    print(" ENTROU NO MODELO DEFAULT LINHAS RELACAO CONTRATO ESTÁ ", get_rows_number(aba_origem_relacao_contratos))
     intervalo_recebimento_origem = f'A-2:R-{get_rows_number(aba_origem_recebimento)}'
     intervalo_recebiveis_destino = f'A-7:L-{get_rows_number(aba_origem_recebiveis) + 7}'
     intervalo_recebiveis_origem = f'A-2:L-{get_rows_number(aba_origem_recebiveis)}'
-    intervalo_relacao_contrato = f'A-2:K-{get_rows_number(aba_origem_recebiveis)}'
+    intervalo_relacao_contrato = f'A-2:K-{get_rows_number(aba_origem_relacao_contratos)}'
 
     perform_data_copy_and_paste(tabs, intervalo_recebimento_origem, intervalo_recebiveis_destino, intervalo_recebiveis_origem, intervalo_relacao_contrato, intervalo_relacao_contrato, linhas_destino_recebiveis, data["selectedOperation"], get_rows_number(aba_origem_recebiveis), get_rows_number(aba_origem_recebiveis))
 
@@ -392,6 +395,7 @@ def neo_report_model_atmosfera(base_filename, data):
 
     aba_origem_recebimento = tabs['aba_origem_recebimento'] # inicialização necessária para definir o 'intervalo_recebimento_origem'
     aba_origem_recebiveis = tabs['aba_origem_recebiveis']   #                             ''
+    aba_origem_relacao_contratos = tabs['aba_origem_relacao_contrato']   #  ''
 
     linhas_destino_recebiveis = 0
     # inputa data de fechamento
@@ -404,7 +408,7 @@ def neo_report_model_atmosfera(base_filename, data):
     intervalo_recebimento_origem = f'A-2:R-{get_rows_number(aba_origem_recebimento)}'
     intervalo_recebiveis_destino = f'A-7:L-{get_rows_number(aba_origem_recebiveis) + 7}'
     intervalo_recebiveis_origem = f'A-2:L-{get_rows_number(aba_origem_recebiveis)}'
-    intervalo_relacao_contrato = f'A-2:K-{get_rows_number(aba_origem_recebiveis)}'
+    intervalo_relacao_contrato = f'A-2:K-{get_rows_number(aba_origem_relacao_contratos)}'
 
     perform_data_copy_and_paste(tabs, intervalo_recebimento_origem, intervalo_recebiveis_destino, intervalo_recebiveis_origem, intervalo_relacao_contrato, intervalo_relacao_contrato, linhas_destino_recebiveis, data["selectedOperation"], get_rows_number(aba_origem_recebiveis), get_rows_number(aba_origem_recebiveis))
 
@@ -422,6 +426,7 @@ def neo_report_model_fives(base_filename, data):
 
     aba_origem_recebimento = tabs['aba_origem_recebimento'] # inicialização necessária para definir o 'intervalo_recebimento_origem'
     aba_origem_recebiveis = tabs['aba_origem_recebiveis']   #                             ''
+    aba_origem_relacao_contratos = tabs['aba_origem_relacao_contrato']   #  ''
 
     linhas_destino_recebiveis = 0
     # inputa data de fechamento
@@ -434,7 +439,7 @@ def neo_report_model_fives(base_filename, data):
     intervalo_recebimento_origem = f'A-2:R-{get_rows_number(aba_origem_recebimento)}'
     intervalo_recebiveis_destino = f'A-7:L-{get_rows_number(aba_origem_recebiveis) + 7}'
     intervalo_recebiveis_origem = f'A-2:L-{get_rows_number(aba_origem_recebiveis)}'
-    intervalo_relacao_contrato = f'A-2:K-{get_rows_number(aba_origem_recebiveis)}'
+    intervalo_relacao_contrato = f'A-2:K-{get_rows_number(aba_origem_relacao_contratos)}'
     perform_data_copy_and_paste(tabs, intervalo_recebimento_origem, intervalo_recebiveis_destino, intervalo_recebiveis_origem, intervalo_relacao_contrato, intervalo_relacao_contrato, linhas_destino_recebiveis, data["selectedOperation"], get_rows_number(aba_origem_recebiveis), get_rows_number(aba_origem_recebiveis))
     
     model_report_wb.save(f"sources/EDT-{data['selectedOperation']}-{data['userEmail']}.xlsx")
