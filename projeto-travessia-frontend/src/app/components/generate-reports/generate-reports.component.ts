@@ -46,7 +46,7 @@ export class GenerateReportsComponent implements OnInit{
   
   ngOnInit(): void {
     this.updateOperations();
-    this.abrirDialog();
+    // this.abrirDialog();
   }
 
   openSnackBar(message: string, action: string) {

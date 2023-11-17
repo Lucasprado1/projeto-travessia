@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 export class GenerateReportsService {
  
 
-  private apiUrl = 'http://localhost:5000'; 
+  // private apiUrl = 'http://localhost:5000'; 
 
-  //private apiUrl = 'https://84ad-201-68-213-170.ngrok-free.app' ; //colar aqui o link referente a porta 5000 que apareceu no ngrok
+  private apiUrl = 'https://84ad-201-68-213-170.ngrok-free.app' ; //colar aqui o link referente a porta 5000 que apareceu no ngrok
   // não esquecer de salvar o arquivo CTRL + S
                                                         
 
