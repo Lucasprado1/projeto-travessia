@@ -66,6 +66,15 @@ def post_upload_modelo():
     global global_filename
     uploaded_file = request.files['file']
     nome_do_arquivo = request.form['fileName']  # Obtém o nome do arquivo do formulário
+    overwriteTemplate = request.form['overwriteModel']  # Obtém o nome do arquivo do formulário
+
+    if overwriteTemplate == "true":
+        #criar bkp do modelo atual e salvar o novo com o nome do atual
+        extension = nome_do_arquivo.split(".")[-1]
+        name = nome_do_arquivo.split(".")[0]
+        diretorio, nome_atual = os.path.split(os.path.join(DIRETORIO, nome_do_arquivo))
+        novo_caminho = os.path.join(diretorio, f'{name} - bkp.{extension}')
+        shutil.move(os.path.join(DIRETORIO, nome_do_arquivo), novo_caminho)
 
     if uploaded_file.filename != '' and nome_do_arquivo != '':
         nome_do_arquivo_completo = os.path.join(DIRETORIO, nome_do_arquivo)
@@ -91,13 +100,11 @@ def post_data():
 @api.route("/checkValues", methods=["POST"])
 def check_values():
     data = request.get_json()
-    print(data)
     canCreate = verifyOperations(data)
-    print(canCreate)
     if canCreate:
         return jsonify({"message": "É possível criar essa operação!"}), 200
     else:
-        return jsonify({"error": "Solicitação inválida. Nome da operação ou Excel ja existem em nossa base."}), 400
+        return jsonify({"error": "Solicitação inválida. Erro ao inserir operação na base de controle."}), 400
 
 # 'Raposo', 'Ibira', 'Atmosfera', 'Barbosa', 'Barreiras', 'FiveSenses', 'GramPoeme',
 #  'LotesCia', 'Ommar', 'PatioLusitania', 'EntreSerras', 'Pardini', 'Dpaula'    
@@ -458,15 +465,18 @@ def verifyOperations(data):
         # Abre o arquivo Excel
         df = pd.read_excel(DIRETORIO_OPERACOES)
         # Verifica a existência dos valores nas colunas correspondentes
-        opId_exists = 'idOperation' in df and data['idOperation'] in df['idOperation'].values
-        excelName_exists = 'excelName' in df and data['excelName'] in df['excelName'].values 
-        if not (opId_exists or excelName_exists):
-            # Os valores não existem no Excel, então vamos inserir uma nova linha
-            nova_linha = pd.DataFrame(data, index=[0])  # Cria um novo DataFrame com os valores
-            df = pd.concat([df, nova_linha], ignore_index=True)  # Concatena o novo DataFrame ao original
+        if(not data['overwriteModel']):
+            opId_exists = 'idOperation' in df and data['idOperation'] in df['idOperation'].values
+            excelName_exists = 'excelName' in df and data['excelName'] in df['excelName'].values 
+            if not (opId_exists or excelName_exists):
+                # Os valores não existem no Excel, então vamos inserir uma nova linha
+                row = data.copy()
+                row.pop('overwriteModel')
+                nova_linha = pd.DataFrame(row, index=[0])  # Cria um novo DataFrame com os valores
+                df = pd.concat([df, nova_linha], ignore_index=True)  # Concatena o novo DataFrame ao original
 
-        df.to_excel(DIRETORIO_OPERACOES, index=False)  # Salva o DataFrame de volta no Excel
-        return not (opId_exists or excelName_exists)
+            df.to_excel(DIRETORIO_OPERACOES, index=False)  # Salva o DataFrame de volta no Excel
+        return True
     except FileNotFoundError:
         return False  # Se o arquivo não existe, retornar True
 
