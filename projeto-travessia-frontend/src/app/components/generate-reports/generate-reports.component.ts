@@ -160,7 +160,7 @@ export class GenerateReportsComponent implements OnInit{
           // result voltou como true, então deve substituir a operação aqui
           this.openSnackBar('Substituindo operação.', 'Fechar');
           overwriteModel = true;
-          this.reportGeneratorService.checkOpValues({idOperation: this.opId.replace(/\//g, "-"), excelName: this.templateName, overwriteModel: overwriteModel}).subscribe(
+          this.reportGeneratorService.checkOpValues({idOperation: this.opId.replace(/\//g, "-"), excelName: this.templateName, overwriteModel: overwriteModel, userName: this.userEmail.split('@')[0]}).subscribe(
           (response: any) => {
             if (!this.uploadedTemplate) {
               alert('Por favor, selecione um arquivo Excel antes de enviar.');
@@ -189,7 +189,7 @@ export class GenerateReportsComponent implements OnInit{
       });
     }
     else{
-      this.reportGeneratorService.checkOpValues({idOperation: this.opId.replace(/\//g, "-"), excelName: this.templateName, overwriteModel: overwriteModel}).subscribe(
+      this.reportGeneratorService.checkOpValues({idOperation: this.opId.replace(/\//g, "-"), excelName: this.templateName, overwriteModel: overwriteModel, userName: this.userEmail.split('@')[0]}).subscribe(
           (response: any) => {
             if (!this.uploadedTemplate) {
               alert('Por favor, selecione um arquivo Excel antes de enviar.');
