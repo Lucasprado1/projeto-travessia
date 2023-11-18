@@ -25,7 +25,6 @@ export class OverwriteConfirmationDialogComponent {
     this.buttonDoubleCheck = true;
     this.confirmationCounting = this.confirmationCounting + 1;
     if(this.confirmationCounting > 1){
-      console.log("confirmar mudança");
       this.fecharDialog(true);
     }
   }

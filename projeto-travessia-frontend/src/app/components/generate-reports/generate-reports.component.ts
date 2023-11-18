@@ -73,7 +73,6 @@ export class GenerateReportsComponent implements OnInit{
 
   onFileSelected(event: any) {
     this.uploadedFile = event.target.files[0];
-    console.log(event.target.files[0])
     if (this.uploadedFile) {
       this.fileName = this.uploadedFile?.name;
       if (this.fileName.slice(-4) != 'xlsx' && this.fileName.slice(-4) != 'xlsb') {
@@ -91,7 +90,6 @@ export class GenerateReportsComponent implements OnInit{
     if (this.uploadedTemplate) {
       let extension = this.uploadedTemplate.name.split(".").slice(-1)[0];
       this.templateName = "modelo - "+ this.opId +"." + extension;
-      console.log(this.templateName);
       if (this.templateName.slice(-4) != 'xlsx' && this.templateName.slice(-4) != 'xlsb') {
         this.openSnackBar('Certifique-se de enviar arquivos com as extensões .xlsx ou .xlsb', 'Fechar');
         this.invalidTemplate = true;
@@ -131,7 +129,6 @@ export class GenerateReportsComponent implements OnInit{
 
       this.reportGeneratorService.uploadFile(this.uploadedFile).subscribe(
         (response: any) => {
-          console.log('Resposta do servidor:', response);
           this.generateReport();
         },
         (error: any) => {
@@ -144,58 +141,79 @@ export class GenerateReportsComponent implements OnInit{
   }
 
   createOperation(){
-    console.log(this.opId)
-    console.log(this.templateName)
-    console.log(this.uploadedTemplate)
-    /* aqui devemos conferir se o nome da operação + nome de excel são únicos no nosso controle, ou seja, 
-    não pode existir nem um ID operação igual nem um nome de excel-modelo igual */
+    // double check se templateName ta ok
+    if (this.uploadedTemplate) {
+      let extension = this.uploadedTemplate.name.split(".").slice(-1)[0];
+      this.templateName = "modelo - "+ this.opId +"." + extension;
+    }
+    let overwriteModel = false;
+    if(this.operations.map(op => op.value).includes(this.opId)){
+      const dialogRef = this.dialog.open(OverwriteConfirmationDialogComponent, {
+        maxWidth: '180%', 
+        maxHeight: '30%',
+        minWidth: '35%', 
+      });
+    
+      dialogRef.afterClosed().subscribe(result => {
 
-    // Função que verifica se podemos criar nova op e insere em nosso excel de controle caso não tenha duplicata
-    this.reportGeneratorService.checkOpValues({idOperation: this.opId.replace(/\//g, "-"), excelName: this.templateName}).subscribe(
-      (response: any) => {
-        if (!this.uploadedTemplate) {
-          alert('Por favor, selecione um arquivo Excel antes de enviar.');
-          return;
-        }
-        this.reportGeneratorService.uploadTemplate(this.uploadedTemplate, this.templateName).subscribe(
+        if(result){
+          // result voltou como true, então deve substituir a operação aqui
+          this.openSnackBar('Substituindo operação.', 'Fechar');
+          overwriteModel = true;
+          this.reportGeneratorService.checkOpValues({idOperation: this.opId.replace(/\//g, "-"), excelName: this.templateName, overwriteModel: overwriteModel}).subscribe(
           (response: any) => {
-            this.updateOperations();
-            this.openSnackBar('Operação criada com sucesso!', 'Fechar');
+            if (!this.uploadedTemplate) {
+              alert('Por favor, selecione um arquivo Excel antes de enviar.');
+              return;
+            }
+            this.reportGeneratorService.uploadTemplate(this.uploadedTemplate, this.templateName, overwriteModel).subscribe(
+              (response: any) => {
+                this.updateOperations();
+                this.openSnackBar('Operação criada com sucesso!', 'Fechar');
+              },
+              (error: any) => {
+                console.error('Falha ao subir modelo:', error);
+                this.openSnackBar('Erro no upload do modelo', 'Fechar');
+              }
+            );
           },
           (error: any) => {
-            console.error('Falha ao subir modelo:', error);
-            this.openSnackBar('Erro no upload do modelo', 'Fechar');
+            console.error('Erro ao criar nova operação:', error);
           }
         );
-      },
-      (error: any) => {
-        // console.error('Erro ao criar nova operação:', error);
-        if(error.status == 400){
-          this.abrirDialog();
         }
-      }
-    );
-    
-  }
-  abrirDialog(): void {
-    const dialogRef = this.dialog.open(OverwriteConfirmationDialogComponent, {
-      maxWidth: '180%', 
-      maxHeight: '30%',
-      minWidth: '35%', 
-    });
+        else{
+          this.openSnackBar('Substituição cancelada. Favor alterar o nome da nova operação.', 'Fechar');
+          return;
+        }
+      });
+    }
+    else{
+      this.reportGeneratorService.checkOpValues({idOperation: this.opId.replace(/\//g, "-"), excelName: this.templateName, overwriteModel: overwriteModel}).subscribe(
+          (response: any) => {
+            if (!this.uploadedTemplate) {
+              alert('Por favor, selecione um arquivo Excel antes de enviar.');
+              return;
+            }
+            this.reportGeneratorService.uploadTemplate(this.uploadedTemplate, this.templateName, overwriteModel).subscribe(
+              (response: any) => {
+                this.updateOperations();
+                this.openSnackBar('Operação criada com sucesso!', 'Fechar');
+              },
+              (error: any) => {
+                console.error('Falha ao subir modelo:', error);
+                this.openSnackBar('Erro no upload do modelo', 'Fechar');
+              }
+            );
+          },
+          (error: any) => {
+            console.error('Erro ao criar nova operação:', error);
+          }
+        );
+    }
   
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog fechado. Resultado: ${result}`);
-      if(result){
-        // result voltou como true, então deve substituir a operação aqui
-        this.openSnackBar('Substituindo operação.', 'Fechar');
-      }
-      else{
-        this.openSnackBar('Substituição cancelada. Favor alterar o nome da nova operação.', 'Fechar');
-      }
-    });
   }
-
+ 
   generateReport() {
     const dataToSend = {
       selectedOperation: this.selectedOperation.replace(/\//g, "-"),
@@ -204,7 +222,6 @@ export class GenerateReportsComponent implements OnInit{
     };
     this.reportGeneratorService.sendData(dataToSend).subscribe(
       (response: any) => {
-        console.log('Resposta do servidor teste:', response);
         this.isGenerating = false;
         this.reportGenerated = true;
       },

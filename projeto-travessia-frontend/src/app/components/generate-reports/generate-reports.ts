@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class GenerateReportsService {
  
 
-  // private apiUrl = 'http://localhost:5000'; 
+  //private apiUrl = 'http://localhost:5000'; 
 
   private apiUrl = 'https://84ad-201-68-213-170.ngrok-free.app' ; //colar aqui o link referente a porta 5000 que apareceu no ngrok
   // não esquecer de salvar o arquivo CTRL + S
@@ -49,10 +49,11 @@ export class GenerateReportsService {
     return this.http.post<any>(`${this.apiUrl}/arquivos`, formData);
   }
 
-  uploadTemplate(file: File, fileName: string) {
+  uploadTemplate(file: File, fileName: string, overwriteModel: any) {
     const formData: FormData = new FormData();
     formData.append('file', file);
     formData.append('fileName', fileName); // Adiciona o nome do arquivo à FormData
+    formData.append('overwriteModel', overwriteModel); // Adiciona o nome do arquivo à FormData
   
     return this.http.post<any>(`${this.apiUrl}/uploadModelo`, formData);
   }
