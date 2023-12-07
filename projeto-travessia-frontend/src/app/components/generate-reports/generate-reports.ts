@@ -10,7 +10,7 @@ export class GenerateReportsService {
 
   //private apiUrl = 'http://localhost:5000'; 
 
-  private apiUrl = 'https://84ad-201-68-213-170.ngrok-free.app' ; //colar aqui o link referente a porta 5000 que apareceu no ngrok
+  private apiUrl = 'https://dbff-201-68-213-170.ngrok-free.app' ; //colar aqui o link referente a porta 5000 que apareceu no ngrok
   // não esquecer de salvar o arquivo CTRL + S
                                                         
 
@@ -60,7 +60,11 @@ export class GenerateReportsService {
   
 
   sendData(dataToSend: object) {
-    return this.http.post<any>(`${this.apiUrl}/data`, dataToSend);
+    return this.http.post<any>(`${this.apiUrl}/data`, dataToSend, {
+      reportProgress: true,
+      observe: 'events'
+    }
+  ,);
   }
 
   checkOpValues(opObject: any){

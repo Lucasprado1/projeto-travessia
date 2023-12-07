@@ -5,6 +5,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { OverwriteConfirmationDialogComponent } from './overwrite-confirmation-dialog/overwrite-confirmation-dialog.component';
+import { HttpEventType } from '@angular/common/http';
 interface Operation {
   value: string;
   viewValue: string;
@@ -16,6 +17,7 @@ interface Operation {
 })
 export class GenerateReportsComponent implements OnInit{
   user: any;
+  haveError: boolean = false;
   invalidFile: boolean = false;
   invalidTemplate: boolean = false;
   userEmail: any;
@@ -30,6 +32,7 @@ export class GenerateReportsComponent implements OnInit{
   public isGenerating: boolean = false;
   public reportGenerated: boolean = false;
   public reportDownloadLink: string = '';
+  progressValue: number = 0;
 
   constructor(
     private reportGeneratorService: GenerateReportsService,
@@ -221,16 +224,23 @@ export class GenerateReportsComponent implements OnInit{
       userEmail: this.userEmail.split('@')[0]
     };
     this.reportGeneratorService.sendData(dataToSend).subscribe(
-      (response: any) => {
-        this.isGenerating = false;
-        this.reportGenerated = true;
+      (event: any) => {
+        if (event.type === HttpEventType.Response) {
+          this.isGenerating = false;
+          this.reportGenerated = true;
+        }
       },
       (error: any) => {
-        console.error('Erro ao fazer o upload do arquivo:', error);
+        console.error('Erro ao gerar o relatório:', error);
+        this.isGenerating = false;
+        this.reportGenerated = false;
+        this.haveError = true;
       }
     );
-    // this.sendFile();
   }
+
+
+  
 
   downloadReport() {
     const dataToReceive = {

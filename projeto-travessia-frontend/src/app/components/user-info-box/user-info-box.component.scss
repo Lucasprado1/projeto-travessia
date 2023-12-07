@@ -1,0 +1,35 @@
+.container {
+    position: fixed;
+    border-radius: 10px;
+    margin-top: 11vh; /* Altere este valor para ajustar o deslocamento */
+    margin-right: 1%;
+    top: 0;
+    right: 0;
+    width: 20%;
+    height: 20vh; /* Tamanho total da tela */
+    background-color: #393E46;
+    z-index: 1; /* Garante que o componente fique sobreposto a outros elementos */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adicionando a sombra */
+    .options{
+        margin-top: 2.2vh;
+        white-space: nowrap;
+        right: 0;
+        margin-left: 50%;
+        font-weight:50;
+        font-size: 100%;
+        color: rgb(132, 132, 250);
+        text-decoration: underline;
+    }    
+}
+.user-text {
+    font-weight: 500;
+    font-size: 140%;
+    color: rgba(238, 238, 238, 0.321);
+}
+.container p{
+    margin-top: 3vh;
+    margin-left: 5vh;
+    font-weight:250;
+    font-size: 120%;
+    color: rgba(238, 238, 238, 0.655);
+}

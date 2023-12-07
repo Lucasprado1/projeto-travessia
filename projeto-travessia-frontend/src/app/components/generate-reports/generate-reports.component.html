@@ -71,7 +71,7 @@
                 <b *ngIf="!fileName && !isGenerating" style=" left: 2.5%; "> 
                     {{"Aguardando arquivo"}} 
                 </b>
-                <b *ngIf="fileName && !isGenerating && !reportGenerated" style="left: 3.5%; "> 
+                <b *ngIf="fileName && !isGenerating && !reportGenerated && !haveError" style="left: 3.5%; "> 
                     {{"Pronto para gerar"}}
                 </b>
                 <b *ngIf="isGenerating && fileName" style="left: 3.5%;"> 
@@ -80,13 +80,17 @@
                 <b *ngIf="reportGenerated" style="left: 3.5%;"> 
                     {{"Relatório disponível"}} 
                 </b>
+                <b *ngIf="haveError" style="left: 3.5%;"> 
+                    {{"Erro ao gerar relatório"}} 
+                </b>
                 <div style=" margin-left:95%"class="file-upload">
                     <button style="margin-right: 80%"mat-mini-fab color="primary" color="accent" 
                     [disabled]="!reportGenerated"
                     (click)="downloadReport()" [ngClass]="{'link': reportGenerated}"
                     class="download-btn">
                         <mat-spinner *ngIf="isGenerating" color="accent" style="width: 3vh; height: 3vh;"></mat-spinner>
-                        <mat-icon style="text-align: justify ;float: left !important" *ngIf="!isGenerating">download_file</mat-icon>
+                        <mat-icon style="text-align: justify ;float: left !important" *ngIf="!isGenerating && !haveError">download_file</mat-icon>
+                        <mat-icon style="text-align: justify ;float: left !important" *ngIf="haveError">warning</mat-icon>
                     </button>
                 </div>
                 

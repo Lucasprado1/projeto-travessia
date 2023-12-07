@@ -22,13 +22,15 @@
         <i (click) = "aviso()" class="material-icons">
             dashboards
         </i>
-        <i (click) = "aviso()" class="material-symbols-outlined">
+        <i (click) = "openUserDetailBox()" class="material-symbols-outlined">
             person
         </i> 
     </span>
     
 
 </mat-toolbar>
+<app-user-info-box *ngIf = "openUserDetail">
+</app-user-info-box>
 <script> 
 
 </script>
